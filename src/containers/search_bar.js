@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchLists } from '../actions/index';
+import { searchLists } from '../actions/index';
 export class SearchBar extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +18,7 @@ export class SearchBar extends Component {
         console.log('Search form was submited');
 
         // Go to api and get results
-        this.props.fetchLists(this.state.term);
+        this.props.searchLists(this.state.term);
         this.setState({ term: '' });
     }
 
@@ -42,7 +42,7 @@ export class SearchBar extends Component {
 
 // Connect our fetchLists action creator to the Search Bar container
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchLists }, dispatch);
+    return bindActionCreators({ searchLists }, dispatch);
 }
 
 
