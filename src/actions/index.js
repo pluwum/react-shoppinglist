@@ -12,7 +12,7 @@ const AXIOS_CONFIG = {
 };
 
 // Store action type as constant for easy modification in the future
-export const FETCH_LISTS = 'FETCH_LISTS';
+export const SEARCH_LISTS = 'SEARCH_LISTS';
 
 // Lets search all shopping lists here
 export function searchLists(term) {
@@ -21,7 +21,7 @@ export function searchLists(term) {
     console.log('Request:', request);
 
     return {
-        type: FETCH_LISTS,
+        type: SEARCH_LISTS,
         payload: request
     }
 }
