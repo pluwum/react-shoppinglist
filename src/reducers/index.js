@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import FetchListReducer from './reducer_shoppinglist';
+import { SearchResultResult } from './reducer_shoppinglist';
 
 const rootReducer = combineReducers({
-  weather: FetchListReducer
+  searchResults: SearchResultResult
 });
 
 export default rootReducer;

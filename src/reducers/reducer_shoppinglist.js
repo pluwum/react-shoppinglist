@@ -1,5 +1,6 @@
-import { SEARCH_LISTS } from '../actions/index'
-export default function (state = [], action) {
+import { SEARCH_LISTS } from '../actions/index';
+
+export function SearchResultResult(state = [], action) {
     console.log('action received:', action);
     switch (action.type) {
         case SEARCH_LISTS:
