@@ -1,6 +1,6 @@
 import { SEARCH_LISTS } from '../actions/index';
 
-export function SearchResultResult(state = [], action) {
+export function SearchResultReducer(state = [], action) {
     console.log('action received:', action);
     switch (action.type) {
         case SEARCH_LISTS:
