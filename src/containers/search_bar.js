@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
-
-export default class SearchBar extends Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchLists } from '../actions/index';
+export class SearchBar extends Component {
     constructor(props) {
         super(props);
         this.state = { term: '' }
 
         // Bind handleInputChange to the components context
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleFormSubmit = this.handleFormSubmit.bind(this);
     }
 
     // Handle form submission
     handleFormSubmit(event) {
         event.preventDefault();
         console.log('Search form was submited');
+
+        // Go to api and get results
+        this.props.fetchLists(this.state.term);
+        this.setState({ term: '' });
     }
 
     // Handle user entering search text
@@ -32,3 +39,11 @@ export default class SearchBar extends Component {
             </form>);
     }
 }
+
+// Connect our fetchLists action creator to the Search Bar container
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ fetchLists }, dispatch);
+}
+
+
+export default connect(null, mapDispatchToProps)(SearchBar);
