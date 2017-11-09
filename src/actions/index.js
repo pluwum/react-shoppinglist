@@ -6,17 +6,20 @@ const ROOT_URL = "http://localhost:5000";
 const AXIOS_CONFIG = {
     headers: {
         'Authorization': `Bearer ${ACCESS_TOKEN}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
     }
 };
 
 // Store action type as constant for easy modification in the future
 export const FETCH_LISTS = 'FETCH_LISTS';
 
-// Lets fetch all shopping lists here
-export function fetchLists(term) {
+// Lets search all shopping lists here
+export function searchLists(term) {
     const url = `${ROOT_URL}/shoppinglists/search/?q=${term}`;
-    const request = axios.get(url, null, AXIOS_CONFIG);
+    const request = axios.get(url, AXIOS_CONFIG);
+    console.log('Request:', request);
+
     return {
         type: FETCH_LISTS,
         payload: request
