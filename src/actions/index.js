@@ -13,6 +13,7 @@ const AXIOS_CONFIG = {
 
 // Store action type as constant for easy modification in the future
 export const SEARCH_LISTS = 'SEARCH_LISTS';
+export const FETCH_LISTS = 'FETCH_LISTS';
 
 // Lets search all shopping lists here
 export function searchLists(term) {
@@ -22,6 +23,18 @@ export function searchLists(term) {
 
     return {
         type: SEARCH_LISTS,
+        payload: request
+    }
+}
+
+// Lets get all shopping lists here
+export function fetchLists() {
+    const url = `${ROOT_URL}/shoppinglists/`;
+    const request = axios.get(url, AXIOS_CONFIG);
+    console.log('Request:', request);
+
+    return {
+        type: FETCH_LISTS,
         payload: request
     }
 }
