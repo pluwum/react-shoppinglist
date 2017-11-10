@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
+import { SearchResultReducer } from './reducer_shoppinglist';
 
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  searchResults: SearchResultReducer
 });
 
 export default rootReducer;
