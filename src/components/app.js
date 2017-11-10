@@ -8,7 +8,6 @@ export default class App extends Component {
       <div>
         <SearchBar />
         <SearchResult />
-        <ShoppingLists />
       </div>
     );
   }
