@@ -6,7 +6,7 @@ class CreateShoppingList extends Component {
             <div className="form-group">
                 <label>{field.label}</label>
                 <input className="form-control" type={field.type} {...field.input} />
-                {field.meta.errors}
+                {field.meta.touched ? field.meta.error : ''}
             </div>
         );
     }
@@ -40,8 +40,8 @@ class CreateShoppingList extends Component {
 
 function validate(values) {
     const errors = {};
-    if (!values.title || values.title.length < 3) {
-        errors.title = "Enter title that is more than three characters !";
+    if (!values.name || values.name.length < 3) {
+        errors.name = "Enter title that is more than three characters !";
     }
 
     return errors;
