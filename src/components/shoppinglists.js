@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLists } from '../actions/index';
+import { Link } from 'react-router-dom';
 
 class ShoppingLists extends Component {
     componentDidMount() {
@@ -18,6 +19,9 @@ class ShoppingLists extends Component {
         console.log("Loaded lists:", this.props.shoppingLists);
         return (
             <div>
+                <div>
+                    <Link className="btn btn-primary" to="/shoppinglists/new">Add Shopping List</Link>
+                </div>
                 <h1>ShoppingLists</h1>
                 <ul>
                     {this.renderShoppingLists()}
