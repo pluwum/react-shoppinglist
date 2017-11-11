@@ -24,7 +24,10 @@ class CreateShoppingList extends Component {
 
     onSubmit(values) {
         console.log('Form has been submited:', values);
-        this.props.createList(values);
+        // Create shopping list and then redirect to list views
+        this.props.createList(values, () => {
+            this.props.history.push('/shoppinglists/');
+        });
     }
 
     render() {
