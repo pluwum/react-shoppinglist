@@ -7,6 +7,7 @@ import reducers from './reducers';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ShoppingLists from './components/shoppinglists';
 import CreateShoppingList from './components/create_shoppinglist'
+import ShoppingListItems from './components/shoppinglist_items';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route path="/shoppinglists/new" component={CreateShoppingList} />
+          <Route path="/shoppinglists/:id" component={ShoppingListItems} />
           <Route path="/shoppinglists" component={ShoppingLists} />
         </Switch  >
       </div>
