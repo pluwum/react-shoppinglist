@@ -10,7 +10,7 @@ class ShoppingLists extends Component {
 
     renderShoppingLists() {
         return _.map(this.props.shoppingLists, shoppinglist => {
-            return (<li key={shoppinglist.id}>{shoppinglist.name}</li>)
+            return (<li key={shoppinglist.id}>{shoppinglist.name}</li>);
         });
     }
 
