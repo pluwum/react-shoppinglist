@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
 class CreateShoppingList extends Component {
     renderField(field) {
-        //Destructure field and meta for cleaner code 
+        // Destructure field and meta for cleaner code 
         const { meta: { touched, error } } = field;
+        // Check if validation errors exist and set class
         const className = `form-group ${touched && error ? 'has-danger' : ''}`;
         return (
             <div className={className}>
@@ -37,6 +39,7 @@ class CreateShoppingList extends Component {
                         type="text"
                         component={this.renderField} />
                     <button type="submit" className="btn btn-primary">Submit</button>
+                    <Link to="/shoppinglists" className="btn btn-danger">Cancel</Link>
                 </form>
             </div>
         );
