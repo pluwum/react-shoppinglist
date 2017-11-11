@@ -6,6 +6,7 @@ class CreateShoppingList extends Component {
             <div className="form-group">
                 <label>{field.label}</label>
                 <input className="form-control" type={field.type} {...field.input} />
+                {field.meta.errors}
             </div>
         );
     }
