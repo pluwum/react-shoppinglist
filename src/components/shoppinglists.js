@@ -17,6 +17,10 @@ class ShoppingLists extends Component {
 
     render() {
         console.log("Loaded lists:", this.props.shoppingLists);
+        if (!this.props.shoppingLists) {
+            return <div>Loading...</div>;
+        }
+
         return (
             <div>
                 <div>
