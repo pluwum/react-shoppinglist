@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Lets setup some constants here
-const ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTA0MzY4ODgsImlhdCI6MTUxMDIyMDg4OCwic3ViIjozfQ.KbvVBnfHxijYVkLxKHfLqstlq4gUBLz_ZUyvFI6bw-w";
+const ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTA2NTM0NTgsImlhdCI6MTUxMDQzNzQ1OCwic3ViIjozfQ.4i76daAN8L9zvgzg2B9NWVWrgsKy_PuE3sCMBVUbFyc";
 const ROOT_URL = "http://localhost:5000";
 const AXIOS_CONFIG = {
     headers: {
@@ -15,6 +15,7 @@ const AXIOS_CONFIG = {
 export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
+export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
 
 // Lets search all shopping lists here
 export function searchLists(term) {
@@ -48,6 +49,18 @@ export function createList(values, callback) {
 
     return {
         type: CREATE_LIST,
+        payload: request
+    }
+}
+
+// Lets get the shopping list with id
+export function fetchListItems(id) {
+    const url = `${ROOT_URL}/shoppinglists/${id}`;
+    const request = axios.get(url, AXIOS_CONFIG);
+    console.log('Request:', request);
+
+    return {
+        type: FETCH_LIST_ITEMS,
         payload: request
     }
 }
