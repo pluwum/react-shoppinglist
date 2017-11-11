@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createList } from '../actions/index';
+
+
 class CreateShoppingList extends Component {
     renderField(field) {
         // Destructure field and meta for cleaner code 
@@ -20,6 +24,7 @@ class CreateShoppingList extends Component {
 
     onSubmit(values) {
         console.log('Form has been submited:', values);
+        this.props.createList(values);
     }
 
     render() {
@@ -58,4 +63,6 @@ function validate(values) {
 export default reduxForm({
     validate,
     form: 'CreateShoppingListForm'
-})(CreateShoppingList);
+})(
+    connect(null, { createList })(CreateShoppingList)
+    );
