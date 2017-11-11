@@ -41,9 +41,9 @@ export function fetchLists() {
 }
 
 // Lets create shopping list here
-export function createList(values) {
+export function createList(values, callback) {
     const url = `${ROOT_URL}/shoppinglists/`;
-    const request = axios.post(url, values, AXIOS_CONFIG);
+    const request = axios.post(url, values, AXIOS_CONFIG).then(() => callback());
     console.log('Request:', request);
 
     return {
