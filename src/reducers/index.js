@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import { SearchResultReducer } from './reducer_shoppinglist';
+import { SearchResultReducer, ShoppingListsReducer } from './reducer_shoppinglist';
 
 const rootReducer = combineReducers({
-  searchResults: SearchResultReducer
+  searchResults: SearchResultReducer,
+  shoppingLists: ShoppingListsReducer
 });
 
 export default rootReducer;
