@@ -11,11 +11,16 @@ class CreateShoppingList extends Component {
         );
     }
 
+    onSubmit(values) {
+        console.log('Form has been submited:', values);
+    }
+
     render() {
+        const { handleSubmit } = this.props;
         return (
             <div>
                 Create New shopping List
-                <form>
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <Field
                         name="name"
                         label="Name"
@@ -26,6 +31,7 @@ class CreateShoppingList extends Component {
                         label="Description"
                         type="text"
                         component={this.renderField} />
+                    <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>
         );
