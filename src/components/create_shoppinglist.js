@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 class CreateShoppingList extends Component {
     renderField(field) {
+        //Destructure field and meta for cleaner code 
+        const { meta: { touched, error } } = field;
+        const className = `form-group ${touched && error ? 'has-danger' : ''}`;
         return (
-            <div className="form-group">
+            <div className={className}>
                 <label>{field.label}</label>
                 <input className="form-control" type={field.type} {...field.input} />
-                {field.meta.touched ? field.meta.error : ''}
+                <div className="text-help">
+                    {touched ? error : ''}
+                </div>
             </div>
         );
     }
