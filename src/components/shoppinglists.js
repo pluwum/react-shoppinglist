@@ -13,6 +13,7 @@ class ShoppingLists extends Component {
         return _.map(this.props.shoppingLists, shoppinglist => {
             return (<li key={shoppinglist.id}>
                 <Link to={`/shoppinglists/${shoppinglist.id}`}> {shoppinglist.name}</Link>
+                <Link to={`/shoppinglists/${shoppinglist.id}/edit`}> Edit</Link>
             </li>);
         });
     }
