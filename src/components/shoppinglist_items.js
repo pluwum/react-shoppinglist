@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchListItems } from '../actions/index';
+import { fetchListItems, deleteList } from '../actions/index';
+import { Link } from 'react-router-dom';
 
 class ShoppingListItems extends Component {
+
     componentDidMount() {
-        const { id } = this.props.match.params
+        const { id } = this.props.match.params;
         this.props.fetchListItems(id);
     }
 
@@ -17,6 +19,15 @@ class ShoppingListItems extends Component {
         });
     }
 
+    handleDelete() {
+        const { id } = this.props.match.params;
+        console.log('You are trying to delete:', id);
+        this.props.deleteList(id, () => {
+            this.props.history.push('/shoppinglists/');
+        });
+
+    }
+
     render() {
         const { shoppingListItems } = this.props;
         console.log('going to show:', shoppingListItems);
@@ -27,6 +38,8 @@ class ShoppingListItems extends Component {
 
         return (
             <div>
+                <Link to="/shoppinglists">Back to lists</Link>
+                <button onClick={this.handleDelete.bind(this)}>Delete</button>
                 <div>Showing A ShoppingList</div>
                 <ul>
                     {this.renderListItems()}
@@ -40,4 +53,4 @@ function mapStateToProps(state) {
     return { shoppingListItems: state.shoppingListItems }
 }
 
-export default connect(mapStateToProps, { fetchListItems })(ShoppingListItems);
+export default connect(mapStateToProps, { fetchListItems, deleteList })(ShoppingListItems);

@@ -16,6 +16,7 @@ export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
+export const DELETE_LIST = 'DELETE_LIST';
 
 // Lets search all shopping lists here
 export function searchLists(term) {
@@ -62,5 +63,17 @@ export function fetchListItems(id) {
     return {
         type: FETCH_LIST_ITEMS,
         payload: request
+    }
+}
+
+// Lets get the shopping list with id
+export function deleteList(id, callback) {
+    const url = `${ROOT_URL}/shoppinglists/${id}`;
+    const request = axios.delete(url, AXIOS_CONFIG).then(() => callback());
+    console.log('Request:', request);
+
+    return {
+        type: DELETE_LIST,
+        payload: id
     }
 }

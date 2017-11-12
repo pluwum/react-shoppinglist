@@ -1,4 +1,4 @@
-import { SEARCH_LISTS, FETCH_LISTS, FETCH_LIST_ITEMS } from '../actions/index';
+import { SEARCH_LISTS, FETCH_LISTS, FETCH_LIST_ITEMS, DELETE_LIST } from '../actions/index';
 import _ from 'lodash';
 
 export function SearchResultReducer(state = [], action) {
@@ -8,6 +8,7 @@ export function SearchResultReducer(state = [], action) {
             console.log('Shopping list found: ', action.payload.data);
             return action.payload.data;
     }
+
     return state;
 }
 
@@ -17,6 +18,10 @@ export function ShoppingListsReducer(state = {}, action) {
         case FETCH_LISTS:
             console.log('Shopping list found: ', action.payload.data);
             return _.mapKeys(action.payload.data, "id");
+
+        case DELETE_LIST:
+            return _.omit(state, action.payload);
+
         default:
             return state;
     }
@@ -29,6 +34,7 @@ export function ShoppingListItemsReducer(state = {}, action) {
         case FETCH_LIST_ITEMS:
             console.log('Shopping list found with items: ', action.payload.data);
             return _.mapKeys(action.payload.data, "id");
+
         default:
             return state;
     }
