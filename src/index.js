@@ -17,6 +17,7 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route path="/shoppinglists/new" component={CreateShoppingList} />
+          <Route path="/shoppinglists/:id/edit" component={CreateShoppingList} />
           <Route path="/shoppinglists/:id" component={ShoppingListItems} />
           <Route path="/shoppinglists" component={ShoppingLists} />
         </Switch  >
