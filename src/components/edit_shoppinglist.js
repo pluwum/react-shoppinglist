@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editList, fetchList } from '../actions/index';
+import { editList, fetchLists } from '../actions/index';
 import ShoppingListForm from './shoppinglist_form';
 
 class EditShoppingList extends Component {
     componentDidMount() {
         const { id } = this.props.match.params;
-        this.props.fetchList(id);
+        this.props.fetchLists(id);
     }
 
     onSubmit(values) {
@@ -24,7 +24,7 @@ class EditShoppingList extends Component {
             <div>
                 Edit shopping List
                 <ShoppingListForm
-                    initialValues={this.props.shoppingList[id]}
+                    initialValues={this.props.shoppingLists[id]}
                     onSubmit={this.onSubmit.bind(this)} id={id} />
             </div>
         );
@@ -33,11 +33,11 @@ class EditShoppingList extends Component {
 
 function mapStateToprops(state) {
     return {
-        shoppingList: state.shoppingList
+        shoppingLists: state.shoppingLists
     }
 }
 
 export default connect(mapStateToprops, {
     editList,
-    fetchList
+    fetchLists
 })(EditShoppingList);
