@@ -30,6 +30,7 @@ class ShoppingListItems extends Component {
 
     render() {
         const { shoppingListItems } = this.props;
+        const { id } = this.props.match.params;
         console.log('going to show:', shoppingListItems);
 
         if (!shoppingListItems) {
@@ -39,6 +40,7 @@ class ShoppingListItems extends Component {
         return (
             <div>
                 <Link to="/shoppinglists">Back to lists</Link>
+                <Link to={`/shoppinglists/${id}/items/new`}>Add Item</Link>
                 <button onClick={this.handleDelete.bind(this)}>Delete</button>
                 <div>Showing A ShoppingList</div>
                 <ul>
