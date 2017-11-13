@@ -14,7 +14,9 @@ const AXIOS_CONFIG = {
 // Store action type as constant for easy modification in the future
 export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
+export const FETCH_LIST = 'FETCH_LIST';
 export const CREATE_LIST = 'CREATE_LIST';
+export const EDIT_LIST = 'EDIT_LIST';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
 export const DELETE_LIST = 'DELETE_LIST';
 
@@ -31,13 +33,25 @@ export function searchLists(term) {
 }
 
 // Lets get all shopping lists here
-export function fetchLists() {
+export function fetchLists(id) {
     const url = `${ROOT_URL}/shoppinglists/`;
     const request = axios.get(url, AXIOS_CONFIG);
     console.log('Request:', request);
 
     return {
         type: FETCH_LISTS,
+        payload: request
+    }
+}
+
+// Lets get a specific shopping list here
+export function fetchList(id) {
+    const url = `${ROOT_URL}/shoppinglists/${id}`;
+    const request = axios.get(url, AXIOS_CONFIG);
+    console.log('Request:', id);
+
+    return {
+        type: FETCH_LIST,
         payload: request
     }
 }
@@ -54,9 +68,21 @@ export function createList(values, callback) {
     }
 }
 
-// Lets get the shopping list with id
-export function fetchListItems(id) {
+// Lets update shopping list here
+export function editList(id, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${id}`;
+    const request = axios.put(url, values, AXIOS_CONFIG).then(() => callback());
+    console.log('Request:', request);
+
+    return {
+        type: EDIT_LIST,
+        payload: request
+    }
+}
+
+// Lets get the items under shopping list with id
+export function fetchListItems(id) {
+    const url = `${ROOT_URL}/shoppinglists/${id}/items`;
     const request = axios.get(url, AXIOS_CONFIG);
     console.log('Request:', request);
 
@@ -66,7 +92,7 @@ export function fetchListItems(id) {
     }
 }
 
-// Lets get the shopping list with id
+// Lets delete the shopping list with id
 export function deleteList(id, callback) {
     const url = `${ROOT_URL}/shoppinglists/${id}`;
     const request = axios.delete(url, AXIOS_CONFIG).then(() => callback());
