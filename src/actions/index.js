@@ -18,6 +18,7 @@ export const FETCH_LIST = 'FETCH_LIST';
 export const CREATE_LIST = 'CREATE_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
+export const FETCH_LIST_ITEM = 'FETCH_LIST_ITEM';
 export const DELETE_LIST = 'DELETE_LIST';
 export const ADD_TO_LIST = 'ADD_TO_LIST';
 
@@ -101,6 +102,18 @@ export function fetchListItems(id) {
 
     return {
         type: FETCH_LIST_ITEMS,
+        payload: request
+    }
+}
+
+// Lets get the items under shopping list with id
+export function fetchListItem(listId, id) {
+    const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
+    const request = axios.get(url, AXIOS_CONFIG);
+    console.log('Request:', request);
+
+    return {
+        type: FETCH_LIST_ITEM,
         payload: request
     }
 }
