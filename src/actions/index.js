@@ -14,7 +14,6 @@ const AXIOS_CONFIG = {
 // Store action type as constant for easy modification in the future
 export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
-export const FETCH_LIST = 'FETCH_LIST';
 export const CREATE_LIST = 'CREATE_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
