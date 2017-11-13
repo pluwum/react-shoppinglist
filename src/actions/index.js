@@ -14,9 +14,9 @@ const AXIOS_CONFIG = {
 // Store action type as constant for easy modification in the future
 export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
-export const FETCH_LIST = 'FETCH_LIST';
 export const CREATE_LIST = 'CREATE_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
+export const EDIT_LIST_ITEM = 'EDIT_LIST_ITEM';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
 export const DELETE_LIST = 'DELETE_LIST';
 export const ADD_TO_LIST = 'ADD_TO_LIST';
@@ -45,18 +45,6 @@ export function fetchLists(id) {
     }
 }
 
-// Lets get a specific shopping list here
-export function fetchList(id) {
-    const url = `${ROOT_URL}/shoppinglists/${id}`;
-    const request = axios.get(url, AXIOS_CONFIG);
-    console.log('Request:', id);
-
-    return {
-        type: FETCH_LIST,
-        payload: request
-    }
-}
-
 // Lets create shopping list here
 export function createList(values, callback) {
     const url = `${ROOT_URL}/shoppinglists/`;
@@ -77,6 +65,18 @@ export function editList(id, values, callback) {
 
     return {
         type: EDIT_LIST,
+        payload: request
+    }
+}
+
+// Lets update shopping Item list here
+export function editListItem(listId, id, values, callback) {
+    const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
+    const request = axios.put(url, values, AXIOS_CONFIG).then(() => callback());
+    console.log('Request:', request);
+
+    return {
+        type: EDIT_LIST_ITEM,
         payload: request
     }
 }

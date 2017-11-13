@@ -1,4 +1,7 @@
-import { SEARCH_LISTS, FETCH_LISTS, FETCH_LIST, FETCH_LIST_ITEMS, DELETE_LIST } from '../actions/index';
+import {
+    SEARCH_LISTS,
+    FETCH_LISTS, FETCH_LIST_ITEMS, DELETE_LIST
+} from '../actions/index';
 import _ from 'lodash';
 
 export function SearchResultReducer(state = [], action) {
@@ -28,19 +31,6 @@ export function ShoppingListsReducer(state = {}, action) {
         default:
             return state;
     }
-
-}
-
-export function ShoppingListReducer(state = {}, action) {
-    console.log('action received:', action);
-    switch (action.type) {
-        case FETCH_LIST:
-            console.log('this Shopping list was found: ', action.payload.data);
-            return _.mapKeys(action.payload.data, "id");
-
-        default:
-            return state;
-    }
 }
 
 export function ShoppingListItemsReducer(state = {}, action) {
@@ -53,5 +43,4 @@ export function ShoppingListItemsReducer(state = {}, action) {
         default:
             return state;
     }
-
 }

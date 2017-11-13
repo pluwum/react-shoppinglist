@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import {
-  SearchResultReducer, ShoppingListsReducer, ShoppingListReducer, ShoppingListItemsReducer
+  SearchResultReducer,
+  ShoppingListsReducer,
+  ShoppingListItemsReducer
 } from './reducer_shoppinglist';
 
 import { reducer as FormReducer } from 'redux-form';
@@ -8,7 +10,6 @@ import { reducer as FormReducer } from 'redux-form';
 const rootReducer = combineReducers({
   searchResults: SearchResultReducer,
   shoppingLists: ShoppingListsReducer,
-  shoppingList: ShoppingListReducer,
   shoppingListItems: ShoppingListItemsReducer,
   form: FormReducer
 });
