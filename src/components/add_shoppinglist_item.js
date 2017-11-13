@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createList } from '../actions/index';
+import ShoppingListItemForm from './shoppinglist_item_form';
 
 class AddShoppingListItem extends Component {
 
@@ -13,6 +14,7 @@ class AddShoppingListItem extends Component {
         return (
             <div>
                 Add item to shopping List
+                <ShoppingListItemForm onSubmit={this.onSubmit.bind(this)} />
             </div>
         );
     }
