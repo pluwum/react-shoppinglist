@@ -19,6 +19,7 @@ export const EDIT_LIST = 'EDIT_LIST';
 export const EDIT_LIST_ITEM = 'EDIT_LIST_ITEM';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
 export const DELETE_LIST = 'DELETE_LIST';
+export const DELETE_LIST_ITEM = 'DELETE_LIST_ITEM';
 export const ADD_TO_LIST = 'ADD_TO_LIST';
 
 // Lets search all shopping lists here
@@ -113,6 +114,18 @@ export function deleteList(id, callback) {
 
     return {
         type: DELETE_LIST,
+        payload: id
+    }
+}
+
+// Lets delete the shopping list with id
+export function deleteListItem(listId, id, callback) {
+    const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
+    const request = axios.delete(url, AXIOS_CONFIG).then(() => callback());
+    console.log('Request:', request);
+
+    return {
+        type: DELETE_LIST_ITEM,
         payload: id
     }
 }
