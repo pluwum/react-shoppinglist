@@ -11,11 +11,16 @@ class ShoppingListItems extends Component {
     }
 
     renderListItems() {
+        const { id } = this.props.match.params;
         return _.map(this.props.shoppingListItems, item => {
             if (!item.id) {
                 return (<li key="1">No items found</li>);
             }
-            return (<li key={item.id}>{item.name}</li>);
+            return (
+                <li key={item.id}>
+                    {item.name}
+                    <Link to={`/shoppinglists/${id}/items/${item.id}`}>Edit</Link>
+                </li>);
         });
     }
 
