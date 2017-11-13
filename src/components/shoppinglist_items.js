@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchListItems, deleteList } from '../actions/index';
+import { fetchListItems, deleteList, deleteListItem } from '../actions/index';
 import { Link } from 'react-router-dom';
 
 class ShoppingListItems extends Component {
@@ -20,7 +20,17 @@ class ShoppingListItems extends Component {
                 <li key={item.id}>
                     {item.name}
                     <Link to={`/shoppinglists/${id}/items/${item.id}`}>Edit</Link>
+                    <button className="btn btn-danger"
+                        onClick={() => this.handleItemDelete(item.id)}>Delete</button>
                 </li>);
+        });
+    }
+
+    handleItemDelete(itemId) {
+        const listId = this.props.match.params.id;
+        console.log('You are trying to delete:', itemId);
+        this.props.deleteListItem(listId, itemId, () => {
+            this.props.history.push(`/shoppinglists/${listId}`);
         });
     }
 
@@ -30,7 +40,6 @@ class ShoppingListItems extends Component {
         this.props.deleteList(id, () => {
             this.props.history.push('/shoppinglists/');
         });
-
     }
 
     render() {
@@ -60,4 +69,4 @@ function mapStateToProps(state) {
     return { shoppingListItems: state.shoppingListItems }
 }
 
-export default connect(mapStateToProps, { fetchListItems, deleteList })(ShoppingListItems);
+export default connect(mapStateToProps, { fetchListItems, deleteList, deleteListItem })(ShoppingListItems);
