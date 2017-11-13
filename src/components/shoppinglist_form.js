@@ -3,7 +3,9 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 
 class ShoppingListForm extends Component {
+
     renderField(field) {
+
         // Destructure field and meta for cleaner code 
         const { meta: { touched, error } } = field;
         // Check if validation errors exist and set class
@@ -21,7 +23,6 @@ class ShoppingListForm extends Component {
 
     render() {
         const { handleSubmit, onSubmit } = this.props;
-
         return (
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Field
@@ -52,5 +53,5 @@ function validate(values) {
 
 export default reduxForm({
     validate,
-    form: 'CreateShoppingListForm'
+    form: 'ShoppingListForm'
 })(ShoppingListForm);
