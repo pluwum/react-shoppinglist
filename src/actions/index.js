@@ -19,6 +19,7 @@ export const CREATE_LIST = 'CREATE_LIST';
 export const EDIT_LIST = 'EDIT_LIST';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
 export const DELETE_LIST = 'DELETE_LIST';
+export const ADD_TO_LIST = 'ADD_TO_LIST';
 
 // Lets search all shopping lists here
 export function searchLists(term) {
@@ -76,6 +77,18 @@ export function editList(id, values, callback) {
 
     return {
         type: EDIT_LIST,
+        payload: request
+    }
+}
+
+// Lets add item to list here
+export function addToList(listid, values, callback) {
+    const url = `${ROOT_URL}/shoppinglists/${listid}/items`;
+    const request = axios.post(url, values, AXIOS_CONFIG).then(() => callback());
+    console.log('Request:', request);
+
+    return {
+        type: ADD_TO_LIST,
         payload: request
     }
 }
