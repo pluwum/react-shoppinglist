@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchListItems } from '../actions/index';
+import { fetchListItems, editListItem } from '../actions/index';
 import ShoppingListItemForm from './shoppinglist_item_form';
 
 class EditShoppingListItem extends Component {
@@ -12,6 +12,10 @@ class EditShoppingListItem extends Component {
 
     onSubmit(values) {
         console.log('Form has been submited:', values);
+        const { listId, id } = this.props.match.params;
+        this.props.editListItem(listId, id, values, () => {
+            this.props.history.push(`/shoppinglists/${listId}/items`);
+        });
     }
 
     render() {
@@ -19,7 +23,9 @@ class EditShoppingListItem extends Component {
         return (
             <div>
                 Edit Item from shopping list
-                <ShoppingListItemForm initialValues={this.props.shoppingListItems[id]} onSubmit={this.onSubmit.bind(this)} />
+                <ShoppingListItemForm
+                    initialValues={this.props.shoppingListItems[id]}
+                    onSubmit={this.onSubmit.bind(this)} />
             </div>
         );
     }
@@ -31,4 +37,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { fetchListItems })(EditShoppingListItem);
+export default connect(mapStateToProps, {
+    fetchListItems,
+    editListItem
+})(EditShoppingListItem);
