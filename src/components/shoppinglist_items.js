@@ -43,8 +43,7 @@ class ShoppingListItems extends Component {
     }
 
     render() {
-        const { shoppingListItems } = this.props;
-        const { id } = this.props.match.params;
+        const { shoppingListItems, match: { params: { id } } } = this.props;
         console.log('going to show:', shoppingListItems);
 
         if (!shoppingListItems) {

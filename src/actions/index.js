@@ -15,6 +15,7 @@ const AXIOS_CONFIG = {
 export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
+export const CREATE_USER = 'CREATE_USER';
 export const EDIT_LIST = 'EDIT_LIST';
 export const EDIT_LIST_ITEM = 'EDIT_LIST_ITEM';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
@@ -54,6 +55,19 @@ export function createList(values, callback) {
 
     return {
         type: CREATE_LIST,
+        payload: request
+    }
+}
+
+
+// Lets create user here
+export function createUser(values, callback) {
+    const url = `${ROOT_URL}/auth/register`;
+    const request = axios.post(url, values, AXIOS_CONFIG).then(() => callback());
+    console.log('Request:', request);
+
+    return {
+        type: CREATE_USER,
         payload: request
     }
 }
