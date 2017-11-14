@@ -11,6 +11,7 @@ import EditShoppingList from './components/edit_shoppinglist';
 import ShoppingListItems from './components/shoppinglist_items';
 import AddShoppingListItem from './components/add_shoppinglist_item';
 import EditShoppingListItem from './components/edit_shoppinglist_item';
+import CreateAccount from './components/create_account';
 import logger from 'redux-logger';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, logger)(createStore);
@@ -20,6 +21,7 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <Switch>
+          <Route path="/shoppinglists/auth/register" component={CreateAccount} />
           <Route path="/shoppinglists/new" component={CreateShoppingList} />
           <Route path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
           <Route path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
