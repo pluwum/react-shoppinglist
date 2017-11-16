@@ -1,21 +1,25 @@
 import axios from 'axios';
 
-// Lets setup some constants here
-const ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTA2NTM0NTgsImlhdCI6MTUxMDQzNzQ1OCwic3ViIjozfQ.4i76daAN8L9zvgzg2B9NWVWrgsKy_PuE3sCMBVUbFyc";
 const ROOT_URL = "http://localhost:5000";
-const AXIOS_CONFIG = {
-    headers: {
-        'Authorization': `Bearer ${ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-    }
-};
+const AXIOS_CONFIG = function () {
+    const ACCESS_TOKEN = sessionStorage.getItem('access_token');
+    return (
+        {
+            headers: {
+                'Authorization': `Bearer ${ACCESS_TOKEN}`,
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        }
+    );
+}
 
 // Store action type as constant for easy modification in the future
 export const SEARCH_LISTS = 'SEARCH_LISTS';
 export const FETCH_LISTS = 'FETCH_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
 export const CREATE_USER = 'CREATE_USER';
+export const LOGIN_USER = 'LOGIN_USER';
 export const EDIT_LIST = 'EDIT_LIST';
 export const EDIT_LIST_ITEM = 'EDIT_LIST_ITEM';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
@@ -26,7 +30,7 @@ export const ADD_TO_LIST = 'ADD_TO_LIST';
 // Lets search all shopping lists here
 export function searchLists(term) {
     const url = `${ROOT_URL}/shoppinglists/search/?q=${term}`;
-    const request = axios.get(url, AXIOS_CONFIG);
+    const request = axios.get(url, AXIOS_CONFIG());
     console.log('Request:', request);
 
     return {
@@ -38,7 +42,7 @@ export function searchLists(term) {
 // Lets get all shopping lists here
 export function fetchLists(id) {
     const url = `${ROOT_URL}/shoppinglists/`;
-    const request = axios.get(url, AXIOS_CONFIG);
+    const request = axios.get(url, AXIOS_CONFIG());
     console.log('Request:', request);
 
     return {
@@ -50,7 +54,8 @@ export function fetchLists(id) {
 // Lets create shopping list here
 export function createList(values, callback) {
     const url = `${ROOT_URL}/shoppinglists/`;
-    const request = axios.post(url, values, AXIOS_CONFIG).then(() => callback());
+    const request = axios.post(url, values, AXIOS_CONFIG())
+        .then(() => callback());
     console.log('Request:', request);
 
     return {
@@ -59,12 +64,11 @@ export function createList(values, callback) {
     }
 }
 
-
 // Lets create user here
 export function createUser(values, callback) {
     const url = `${ROOT_URL}/auth/register`;
-    const request = axios.post(url, values, AXIOS_CONFIG).then(() => callback());
-    console.log('Request:', request);
+    const request = axios.post(url, values, AXIOS_CONFIG())
+        .then(() => callback());
 
     return {
         type: CREATE_USER,
@@ -75,8 +79,8 @@ export function createUser(values, callback) {
 // Lets update shopping list here
 export function editList(id, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${id}`;
-    const request = axios.put(url, values, AXIOS_CONFIG).then(() => callback());
-    console.log('Request:', request);
+    const request = axios.put(url, values, AXIOS_CONFIG())
+        .then(() => callback());
 
     return {
         type: EDIT_LIST,
@@ -87,8 +91,8 @@ export function editList(id, values, callback) {
 // Lets update shopping Item list here
 export function editListItem(listId, id, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
-    const request = axios.put(url, values, AXIOS_CONFIG).then(() => callback());
-    console.log('Request:', request);
+    const request = axios.put(url, values, AXIOS_CONFIG())
+        .then(() => callback());
 
     return {
         type: EDIT_LIST_ITEM,
@@ -99,8 +103,8 @@ export function editListItem(listId, id, values, callback) {
 // Lets add item to list here
 export function addToList(listid, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${listid}/items`;
-    const request = axios.post(url, values, AXIOS_CONFIG).then(() => callback());
-    console.log('Request:', request);
+    const request = axios.post(url, values, AXIOS_CONFIG())
+        .then(() => callback());
 
     return {
         type: ADD_TO_LIST,
@@ -111,8 +115,7 @@ export function addToList(listid, values, callback) {
 // Lets get the items under shopping list with id
 export function fetchListItems(id) {
     const url = `${ROOT_URL}/shoppinglists/${id}/items`;
-    const request = axios.get(url, AXIOS_CONFIG);
-    console.log('Request:', request);
+    const request = axios.get(url, AXIOS_CONFIG());
 
     return {
         type: FETCH_LIST_ITEMS,
@@ -123,8 +126,8 @@ export function fetchListItems(id) {
 // Lets delete the shopping list with id
 export function deleteList(id, callback) {
     const url = `${ROOT_URL}/shoppinglists/${id}`;
-    const request = axios.delete(url, AXIOS_CONFIG).then(() => callback());
-    console.log('Request:', request);
+    const request = axios.delete(url, AXIOS_CONFIG())
+        .then(() => callback());
 
     return {
         type: DELETE_LIST,
@@ -135,11 +138,30 @@ export function deleteList(id, callback) {
 // Lets delete the shopping list with id
 export function deleteListItem(listId, id, callback) {
     const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
-    const request = axios.delete(url, AXIOS_CONFIG).then(() => callback());
-    console.log('Request:', request);
+    const request = axios.delete(url, AXIOS_CONFIG())
+        .then(() => callback());
 
     return {
         type: DELETE_LIST_ITEM,
         payload: id
+    }
+}
+
+// Lets login user here
+export function loginUser(values, callback) {
+    const url = `${ROOT_URL}/auth/login`;
+    const request = axios.post(url, values, AXIOS_CONFIG())
+        .catch(function (error) {
+            //do this when login is not successful
+            console.log('This happened: ', JSON.stringify(error.response.data.message))
+        })
+        .then((response) => {
+            sessionStorage.setItem('access_token', response.data.access_token);
+            callback();
+        });
+
+    return {
+        type: LOGIN_USER,
+        payload: request
     }
 }
