@@ -23,14 +23,16 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route path="/shoppinglists/auth/register" component={CreateAccount} />
-          <Route path="/shoppinglists/new" component={CreateShoppingList} />
-          <Route path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
-          <Route path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
-          <Route path="/shoppinglists/:id/edit" component={EditShoppingList} />
-          <Route path="/shoppinglists/:id" component={ShoppingListItems} />
-          <Route path="/shoppinglists" component={ShoppingLists} />
           <Route path="/" component={Login} />
-        </Switch  >
+          <Route component={EnsureLoggedIn}>
+            <Route path="/shoppinglists/new" component={CreateShoppingList} />
+            <Route path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
+            <Route path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
+            <Route path="/shoppinglists/:id/edit" component={EditShoppingList} />
+            <Route path="/shoppinglists/:id" component={ShoppingListItems} />
+            <Route path="/shoppinglists" component={ShoppingLists} />
+          </Route>
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>
