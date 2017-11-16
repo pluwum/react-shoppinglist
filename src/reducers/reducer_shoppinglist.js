@@ -1,6 +1,6 @@
 import {
     SEARCH_LISTS,
-    FETCH_LISTS, FETCH_LIST_ITEMS, DELETE_LIST, DELETE_LIST_ITEM
+    FETCH_LISTS, FETCH_LIST_ITEMS, DELETE_LIST, DELETE_LIST_ITEM, LOGIN_USER
 } from '../actions/index';
 import _ from 'lodash';
 
@@ -47,7 +47,10 @@ export function AuthReducer(state = {}, action) {
     console.log('action received:', action);
     switch (action.type) {
         case LOGIN_USER:
-            console.log('User Auth attempt returned ', action.payload.data);
+            console.log('User Auth attempt returned ', action);
+            return {
+                isLoggedIn: true
+            };
         //return _.mapKeys(action.payload.data, "id");
         default:
             return state;
