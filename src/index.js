@@ -12,9 +12,12 @@ import ShoppingListItems from './components/shoppinglist_items';
 import AddShoppingListItem from './components/add_shoppinglist_item';
 import EditShoppingListItem from './components/edit_shoppinglist_item';
 import CreateAccount from './components/create_account';
+import Login from './components/login';
 import logger from 'redux-logger';
+import ProtectedRoute from './containers/protect_routes';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxPromise, logger)(createStore);
+const createStoreWithMiddleware = composeWithDevTools(applyMiddleware(ReduxPromise, logger))(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
@@ -22,14 +25,15 @@ ReactDOM.render(
       <div>
         <Switch>
           <Route path="/shoppinglists/auth/register" component={CreateAccount} />
-          <Route path="/shoppinglists/new" component={CreateShoppingList} />
-          <Route path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
-          <Route path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
-          <Route path="/shoppinglists/:id/edit" component={EditShoppingList} />
-          <Route path="/shoppinglists/:id" component={ShoppingListItems} />
-          <Route path="/shoppinglists" component={ShoppingLists} />
-        </Switch  >
+          <ProtectedRoute path="/shoppinglists/new" component={CreateShoppingList} />
+          <ProtectedRoute path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
+          <ProtectedRoute path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
+          <ProtectedRoute path="/shoppinglists/:id/edit" component={EditShoppingList} />
+          <ProtectedRoute path="/shoppinglists/:id" component={ShoppingListItems} />
+          <ProtectedRoute path="/shoppinglists" component={ShoppingLists} />
+          <Route exact path="/" component={Login} />
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>
-  , document.querySelector('.container'));
+  , document.querySelector('.react-container'));

@@ -1,6 +1,6 @@
 import {
     SEARCH_LISTS,
-    FETCH_LISTS, FETCH_LIST_ITEMS, DELETE_LIST, DELETE_LIST_ITEM
+    FETCH_LISTS, FETCH_LIST_ITEMS, DELETE_LIST, DELETE_LIST_ITEM, LOGIN_USER
 } from '../actions/index';
 import _ from 'lodash';
 
@@ -38,6 +38,20 @@ export function ShoppingListItemsReducer(state = {}, action) {
             return _.mapKeys(action.payload.data, "id");
         case DELETE_LIST_ITEM:
             return _.omit(state, action.payload);
+        default:
+            return state;
+    }
+}
+
+export function AuthReducer(state = {}, action) {
+    console.log('action received:', action);
+    switch (action.type) {
+        case LOGIN_USER:
+            console.log('User Auth attempt returned ', action);
+            return {
+                isLoggedIn: true
+            };
+        //return _.mapKeys(action.payload.data, "id");
         default:
             return state;
     }
