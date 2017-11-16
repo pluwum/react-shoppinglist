@@ -8,7 +8,7 @@ class Login extends Component {
     onSubmit(values) {
         console.log('Form has been submited:', values);
         this.props.loginUser(values, () => {
-            console.log('trying to login');
+            console.log('trying to login', this.props.history);
             this.props.history.push('/shoppinglists');
         });
     }
