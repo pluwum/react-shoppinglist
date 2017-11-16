@@ -42,3 +42,14 @@ export function ShoppingListItemsReducer(state = {}, action) {
             return state;
     }
 }
+
+export function AuthReducer(state = {}, action) {
+    console.log('action received:', action);
+    switch (action.type) {
+        case LOGIN_USER:
+            console.log('User Auth attempt returned ', action.payload.data);
+        //return _.mapKeys(action.payload.data, "id");
+        default:
+            return state;
+    }
+}
