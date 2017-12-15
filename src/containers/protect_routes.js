@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import NavBarAuthed from '../components/nav_bar_authed';
 export class ProtectedRoute extends Component {
     isLoggedIn() {
         const access_token = sessionStorage.getItem("access_token");
@@ -15,16 +15,25 @@ export class ProtectedRoute extends Component {
         const { isLoggedIn, component: Component, ...rest } = this.props;
         //console.log('Yay!! Look at my props!!!!', props.location);
         return (
-            <Route {...rest} render={props => (
-                this.isLoggedIn() ? (
-                    <Component {...props} />
-                ) : (
-                        <Redirect to={{
-                            pathname: '/',
-                            state: { from: props.location }
-                        }} />
-                    )
-            )} />
+            <Route {...rest} render={props => {
+                if (this.isLoggedIn()) {
+                    return (
+                        <div>
+                            <NavBarAuthed />
+                            <div className="container">
+                                <Component {...props} />
+                            </div>
+                        </div>
+                    );
+                }
+                return (
+                    <Redirect to={{
+                        pathname: '/',
+                        state: { from: props.location }
+                    }} />
+                );
+
+            }} />
         );
     }
 }
