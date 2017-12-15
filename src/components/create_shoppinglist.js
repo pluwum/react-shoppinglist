@@ -17,7 +17,6 @@ class CreateShoppingList extends Component {
 
         return (
             <div>
-                Create New shopping List
                 <ShoppingListForm onSubmit={this.onSubmit.bind(this)} />
             </div>
         );

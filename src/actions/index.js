@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ROOT_URL = "http://localhost:5000";
+const ROOT_URL = "http://localhost:5000/v1";
 const AXIOS_CONFIG = function () {
     const ACCESS_TOKEN = sessionStorage.getItem('access_token');
     return (

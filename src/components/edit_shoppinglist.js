@@ -22,7 +22,6 @@ class EditShoppingList extends Component {
         const { id } = this.props.match.params;
         return (
             <div>
-                Edit shopping List
                 <ShoppingListForm
                     initialValues={this.props.shoppingLists[id]}
                     onSubmit={this.onSubmit.bind(this)} id={id} />

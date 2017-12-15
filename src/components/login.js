@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions/index';
-
+import NavBarUnAuthed from './nav_bar_unauthed';
 class Login extends Component {
 
     onSubmit(values) {
@@ -34,20 +34,27 @@ class Login extends Component {
         const { handleSubmit } = this.props;
         return (
             <div>
-                <div>Welcome, Login Here</div>
-                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    <Field
-                        name="email"
-                        label="Email"
-                        type="text"
-                        component={this.renderField} />
-                    <Field
-                        name="password"
-                        label="Password"
-                        type="password"
-                        component={this.renderField} />
-                    <button type="submit" className="btn btn-primary">Login  </button>
-                </form>
+                <NavBarUnAuthed />
+                <div className="row">
+                    <div className="col-md-4 col-md-offset-4 well well-lg">
+                        <div id="login">
+                            <h1>Please Login!</h1>
+                            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                                <Field
+                                    name="email"
+                                    label="Email"
+                                    type="text"
+                                    component={this.renderField} />
+                                <Field
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    component={this.renderField} />
+                                <button type="submit" className="btn btn-primary">Login  </button>
+                            </form>
+                        </div>
+                    </div>
+                </div >
             </div>
         );
     }

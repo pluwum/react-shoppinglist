@@ -16,13 +16,19 @@ class ShoppingListItems extends Component {
             if (!item.id) {
                 return (<li key="1">No items found</li>);
             }
+
             return (
-                <li key={item.id}>
-                    {item.name}
-                    <Link to={`/shoppinglists/${id}/items/${item.id}`}>Edit</Link>
-                    <button className="btn btn-danger"
-                        onClick={() => this.handleItemDelete(item.id)}>Delete</button>
-                </li>);
+                <tr key={item.id}>
+                    <td></td>
+                    <td>{item.name}</td>
+                    <td>{item.description}</td>
+                    <td>
+                        <Link to={`/shoppinglists/${id}/items/${item.id}`} className="btn btn-info">Edit</Link>
+                        <button className="btn btn-danger"
+                            onClick={() => this.handleItemDelete(item.id)}>Delete</button>
+                    </td >
+                </tr >
+            );
         });
     }
 
@@ -52,14 +58,28 @@ class ShoppingListItems extends Component {
 
         return (
             <div>
-                <Link to="/shoppinglists">Back to lists</Link>
-                <Link to={`/shoppinglists/${id}/items/new`}>Add Item</Link>
-                <button onClick={this.handleDelete.bind(this)}>Delete</button>
-                <div>Showing A ShoppingList</div>
-                <ul>
-                    {this.renderListItems()}
-                </ul>
-            </div>
+                <div className="page-header">
+                    <h1> Here's Your Shopping lists </h1>
+                </div>
+                <Link to={`/shoppinglists/${id}/items/new`} className="btn btn-info">Add Item</Link>
+                <div className="row">
+                    <div className="col-md-12">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderListItems()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div >
         );
     }
 }
