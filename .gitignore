@@ -8,3 +8,4 @@ npm-debug.log
 /.idea
 # myfiles
 package-lock.json
+.vscode/

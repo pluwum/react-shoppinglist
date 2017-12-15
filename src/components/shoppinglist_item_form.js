@@ -24,20 +24,29 @@ class ShoppingListItemForm extends Component {
     render() {
         const { handleSubmit, onSubmit } = this.props;
         return (
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Field
-                    name="name"
-                    label="Name"
-                    type="text"
-                    component={this.renderField} />
-                <Field
-                    name="description"
-                    label="Description"
-                    type="text"
-                    component={this.renderField} />
-                <button type="submit" className="btn btn-primary">Submit</button>
-                <Link to="/shoppinglists" className="btn btn-danger">Cancel</Link>
-            </form>
+            <div className="row">
+                <div className="col-md-5 col-md-offset-4 well well-lg">
+                    <div id="login">
+                        <h1>Update Item</h1>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <Field
+                                name="name"
+                                label="Name"
+                                type="text"
+                                component={this.renderField} />
+                            <Field
+                                name="description"
+                                label="Description"
+                                type="text"
+                                component={this.renderField} />
+                            <div className="form-group">
+                                <button type="submit" className="btn btn-primary">Submit</button>
+                                <Link to="/shoppinglists" className="btn btn-danger pull-right">Cancel</Link>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div >
         );
     }
 }

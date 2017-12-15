@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { createUser } from '../actions/index';
 import { connect } from 'react-redux';
-
+import NavBarUnAuthed from './nav_bar_unauthed';
 class CreateAccount extends Component {
 
     onSubmit(values) {
@@ -33,25 +33,35 @@ class CreateAccount extends Component {
     render() {
         const { handleSubmit } = this.props;
         return (
-            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <Field
-                    name="email"
-                    label="Email"
-                    type="text"
-                    component={this.renderField} />
-                <Field
-                    name="password"
-                    label="Password"
-                    type="password"
-                    component={this.renderField} />
-                <Field
-                    name="repassword"
-                    label="Confirm Password"
-                    type="password"
-                    component={this.renderField} />
-                <button type="submit" className="btn btn-primary">Register  </button>
-                <Link to="/" className="btn btn-danger">Cancel</Link>
-            </form>
+            <div>
+                <NavBarUnAuthed />
+                <div className="row">
+                    <div className="col-md-5 col-md-offset-4 well well-lg">
+                        <div id="login">
+                            <h1>Register for an account</h1>
+                            <form className="form-horizontal" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                                <Field
+                                    name="email"
+                                    label="Email"
+                                    type="text"
+                                    component={this.renderField} />
+                                <Field
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    component={this.renderField} />
+                                <Field
+                                    name="repassword"
+                                    label="Confirm Password"
+                                    type="password"
+                                    component={this.renderField} />
+                                <button type="submit" className="btn btn-primary">Register  </button>
+                                <Link to="/" className="btn btn-danger">Cancel</Link>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

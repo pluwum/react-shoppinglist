@@ -11,28 +11,53 @@ class ShoppingLists extends Component {
 
     renderShoppingLists() {
         return _.map(this.props.shoppingLists, shoppinglist => {
-            return (<li key={shoppinglist.id}>
-                <Link to={`/shoppinglists/${shoppinglist.id}`}> {shoppinglist.name}</Link>
-                <Link to={`/shoppinglists/${shoppinglist.id}/edit`}> Edit</Link>
-            </li>);
+            return (
+                <tr key={shoppinglist.id}>
+                    <td></td>
+                    <td>{shoppinglist.name}</td>
+                    <td>{shoppinglist.description}</td>
+                    <td>
+                        <div className="pull-right">
+                            <Link to={`/shoppinglists/${shoppinglist.id}/items`} className="btn btn-sm btn-primary">View</Link>
+                            <Link to={`/shoppinglists/${shoppinglist.id}/edit`} className="btn btn-sm btn-info">Edit</Link>
+                            <button className="btn btn-sm btn-danger">Delete</button>
+                        </div>
+                    </td >
+                </tr >
+            );
         });
     }
 
     render() {
         console.log("Loaded lists:", this.props.shoppingLists);
         if (!this.props.shoppingLists) {
-            return <div>Loading...</div>;
+            return (
+                <div className="alert alert-success">
+                    <strong>Opps! </strong> You have no Shopping Lists at the moment :-(. To create one, click <Link to="/shoppinglists/new">here</Link>
+                </div>
+            );
         }
 
         return (
             <div>
-                <div>
-                    <Link className="btn btn-primary" to="/shoppinglists/new">Add Shopping List</Link>
+                <div className="page-header">
+                    <h1> Here's Your Shopping lists </h1>
                 </div>
-                <h1>ShoppingLists</h1>
-                <ul>
-                    {this.renderShoppingLists()}
-                </ul>
+                <div className="row">
+                    <div className="col-md-12">
+                        <table className="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                                {this.renderShoppingLists()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         );
     }
