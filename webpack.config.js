@@ -14,18 +14,23 @@ module.exports = {
       query: {
         presets: ['react', 'es2015', 'stage-1']
       }
-    },
-    {
+    },{
       test: /\.css$/,
-      loader: 'style-loader'
-    }, {
+      include: /node_modules/,
+      loaders: [
+          'style',
+          'css'
+      ]
+  },
+  {
       test: /\.css$/,
-      loader: 'css-loader',
-      query: {
-        modules: true,
-        localIdentName: '[name]__[local]___[hash:base64:5]'
-      }
-    }]
+      include: /src/,
+      loaders: [
+          'style',
+          'css?importLoaders=1&localIdentName=[name]__[local]__[hash:10]&modules',
+          'postcss'
+      ]
+  }]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
