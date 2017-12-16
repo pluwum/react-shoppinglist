@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchListItems, deleteList, deleteListItem } from '../actions/index';
 import { Link } from 'react-router-dom';
+import Spinner from './spinner';
 
 class ShoppingListItems extends Component {
+
+    componentWillMount(){
+        this.props.shoppingListItems.isFetching = true;
+    }
 
     componentDidMount() {
         const { id } = this.props.match.params;
@@ -12,7 +17,7 @@ class ShoppingListItems extends Component {
 
     renderListItems() {
         const { id } = this.props.match.params;
-        return _.map(this.props.shoppingListItems, item => {
+        return _.map(this.props.shoppingListItems.data, item => {
             if (!item.id) {
                 return (<li key="1">No items found</li>);
             }
@@ -50,10 +55,12 @@ class ShoppingListItems extends Component {
 
     render() {
         const { shoppingListItems, match: { params: { id } } } = this.props;
-        console.log('going to show:', shoppingListItems);
+        console.log('going to show:', shoppingListItems.data);
 
-        if (!shoppingListItems) {
-            return <div>Loading...</div>;
+        if(shoppingListItems.isFetching){
+            return (
+                <Spinner/>
+            );
         }
 
         return (

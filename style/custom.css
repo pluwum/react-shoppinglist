@@ -1,0 +1,5 @@
+.center-block {
+    float: none !important;
+    display: block;
+    margin: 0 auto;
+}

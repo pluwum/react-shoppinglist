@@ -22,7 +22,11 @@ export function ShoppingListsReducer(state = {}, action) {
     switch (action.type) {
         case FETCH_LISTS:
             console.log('Shopping list found: ', action.payload.data);
-            return _.mapKeys(action.payload.data, "id");
+            return {
+                ...state,
+                isFetching: false,
+                data: _.mapKeys(action.payload.data, "id")
+            }
         case DELETE_LIST:
             return _.omit(state, action.payload);
         default:
@@ -35,7 +39,11 @@ export function ShoppingListItemsReducer(state = {}, action) {
     switch (action.type) {
         case FETCH_LIST_ITEMS:
             console.log('Shopping list was found with details: ', action.payload.data);
-            return _.mapKeys(action.payload.data, "id");
+            return {
+                ...state,
+                isFetching: false,
+                data: _.mapKeys(action.payload.data, "id")
+            }
         case DELETE_LIST_ITEM:
             return _.omit(state, action.payload);
         default:
