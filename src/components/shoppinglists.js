@@ -3,14 +3,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLists } from '../actions/index';
 import { Link } from 'react-router-dom';
+import Spinner from './spinner';
 
 class ShoppingLists extends Component {
+    componentWillMount(){
+        this.props.shoppingLists.isFetching = true;
+    }
+    
     componentDidMount() {
+        
         this.props.fetchLists();
     }
 
     renderShoppingLists() {
-        return _.map(this.props.shoppingLists, shoppinglist => {
+        return _.map(this.props.shoppingLists.data, shoppinglist => {
             return (
                 <tr key={shoppinglist.id}>
                     <td></td>
@@ -37,7 +43,11 @@ class ShoppingLists extends Component {
                 </div>
             );
         }
-
+        if(this.props.shoppingLists.isFetching){
+            return (
+                <Spinner/>
+            );
+        }
         return (
             <div>
                 <div className="page-header">
