@@ -11,7 +11,6 @@ class ShoppingLists extends Component {
     }
     
     componentDidMount() {
-        
         this.props.fetchLists();
     }
 
@@ -36,14 +35,24 @@ class ShoppingLists extends Component {
 
     render() {
         console.log("Loaded lists:", this.props.shoppingLists);
-        if (!this.props.shoppingLists) {
+        const { shoppingLists: { data, isFetching, error } } = this.props;
+       
+        if (error) {
+            return (
+                <div className="alert alert-danger">
+                    <strong>Opps! </strong> Something went terribly wrong
+                </div>
+            );
+        }
+
+        if (!data) {
             return (
                 <div className="alert alert-success">
                     <strong>Opps! </strong> You have no Shopping Lists at the moment :-(. To create one, click <Link to="/shoppinglists/new">here</Link>
                 </div>
             );
         }
-        if(this.props.shoppingLists.isFetching){
+        if(isFetching){
             return (
                 <Spinner/>
             );

@@ -21,10 +21,11 @@ export function ShoppingListsReducer(state = {}, action) {
     console.log('action received:', action);
     switch (action.type) {
         case FETCH_LISTS:
-            console.log('Shopping list found: ', action.payload.data);
+            console.log('Shopping list found: ', action);
             return {
                 ...state,
                 isFetching: false,
+                error: action.error,
                 data: _.mapKeys(action.payload.data, "id")
             }
         case DELETE_LIST:
