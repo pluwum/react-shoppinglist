@@ -35,13 +35,24 @@ class ShoppingLists extends Component {
 
     render() {
         console.log("Loaded lists:", this.props.shoppingLists);
-        const { shoppingLists: { data, isFetching, error } } = this.props;
-       
+        const { shoppingLists: { data, isFetching, error, message } } = this.props;
+        // if (message) {
+        //     return (
+        //         <SuccessToast message={message}/>
+        //     );
+        // }
+
         if (error) {
             return (
                 <div className="alert alert-danger">
                     <strong>Opps! </strong> Something went terribly wrong
                 </div>
+            );
+        }
+
+        if(isFetching){
+            return (
+                <Spinner/>
             );
         }
 
@@ -52,11 +63,7 @@ class ShoppingLists extends Component {
                 </div>
             );
         }
-        if(isFetching){
-            return (
-                <Spinner/>
-            );
-        }
+        
         return (
             <div>
                 <div className="page-header">
@@ -83,7 +90,7 @@ class ShoppingLists extends Component {
 }
 
 function mapStateToProps(state) {
-    return { shoppingLists: state.shoppingLists }
+    return { shoppingLists: state.shoppingLists, authData: state.shoppingListItems.data }
 }
 
 export default connect(mapStateToProps, { fetchLists })(ShoppingLists);

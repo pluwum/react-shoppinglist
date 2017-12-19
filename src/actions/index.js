@@ -1,4 +1,5 @@
 import axios from 'axios';
+import toastr from 'toastr';
 
 const ROOT_URL = "http://localhost:5000/v1";
 const AXIOS_CONFIG = function () {
@@ -12,6 +13,14 @@ const AXIOS_CONFIG = function () {
             }
         }
     );
+}
+
+const toastError = (message) =>{
+    toastr.error( message, 'Opps!! Operation failed miserably:');
+}
+
+const toastSuccess = (message) =>{
+    toastr.success( message, 'Yaay!! Operation was successful:');
 }
 
 // Store action type as constant for easy modification in the future
@@ -28,10 +37,16 @@ export const DELETE_LIST_ITEM = 'DELETE_LIST_ITEM';
 export const ADD_TO_LIST = 'ADD_TO_LIST';
 
 // Lets search all shopping lists here
-export function searchLists(term) {
+export function searchLists(term, callback) {
     const url = `${ROOT_URL}/shoppinglists/search/?q=${term}`;
-    const request = axios.get(url, AXIOS_CONFIG());
-    console.log('Request:', request);
+    const doStuff = () =>{
+        toastSuccess('Search was success');
+        callback();
+    }
+
+    const request = axios.get(url, AXIOS_CONFIG())
+        .then(doStuff())
+        .catch((error) => toastError(error.response.data.message));
 
     return {
         type: SEARCH_LISTS,
@@ -42,8 +57,8 @@ export function searchLists(term) {
 // Lets get all shopping lists here
 export function fetchLists(id) {
     const url = `${ROOT_URL}/shoppinglists/`;
-    const request = axios.get(url, AXIOS_CONFIG());
-    console.log('Request:', request);
+    const request = axios.get(url, AXIOS_CONFIG())
+        .catch((error) => toastError(error.response.data.message));
 
     return {
         type: FETCH_LISTS,
@@ -55,9 +70,11 @@ export function fetchLists(id) {
 export function createList(values, callback) {
     const url = `${ROOT_URL}/shoppinglists/`;
     const request = axios.post(url, values, AXIOS_CONFIG())
-        .then(() => callback());
-    console.log('Request:', request);
-
+        .then(() => {
+            toastSuccess('List was created successfully');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: CREATE_LIST,
         payload: request
@@ -68,8 +85,11 @@ export function createList(values, callback) {
 export function createUser(values, callback) {
     const url = `${ROOT_URL}/auth/register`;
     const request = axios.post(url, values, AXIOS_CONFIG())
-        .then(() => callback());
-
+        .then(() => {
+            toastSuccess('User was created successfully');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: CREATE_USER,
         payload: request
@@ -80,8 +100,11 @@ export function createUser(values, callback) {
 export function editList(id, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${id}`;
     const request = axios.put(url, values, AXIOS_CONFIG())
-        .then(() => callback());
-
+        .then(() => {
+            toastSuccess('Your list was successfully edited!'); 
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: EDIT_LIST,
         payload: request
@@ -92,8 +115,11 @@ export function editList(id, values, callback) {
 export function editListItem(listId, id, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
     const request = axios.put(url, values, AXIOS_CONFIG())
-        .then(() => callback());
-
+        .then(() => {
+            toastSuccess('List Item was edited successfully');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: EDIT_LIST_ITEM,
         payload: request
@@ -104,8 +130,11 @@ export function editListItem(listId, id, values, callback) {
 export function addToList(listid, values, callback) {
     const url = `${ROOT_URL}/shoppinglists/${listid}/items`;
     const request = axios.post(url, values, AXIOS_CONFIG())
-        .then(() => callback());
-
+        .then(() => {
+            toastSuccess('Item was successfully added to list');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: ADD_TO_LIST,
         payload: request
@@ -115,8 +144,8 @@ export function addToList(listid, values, callback) {
 // Lets get the items under shopping list with id
 export function fetchListItems(id) {
     const url = `${ROOT_URL}/shoppinglists/${id}/items`;
-    const request = axios.get(url, AXIOS_CONFIG());
-
+    const request = axios.get(url, AXIOS_CONFIG())
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: FETCH_LIST_ITEMS,
         payload: request
@@ -127,8 +156,11 @@ export function fetchListItems(id) {
 export function deleteList(id, callback) {
     const url = `${ROOT_URL}/shoppinglists/${id}`;
     const request = axios.delete(url, AXIOS_CONFIG())
-        .then(() => callback());
-
+        .then(() => {
+            toastSuccess('List was deleted successfully');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: DELETE_LIST,
         payload: id
@@ -139,8 +171,11 @@ export function deleteList(id, callback) {
 export function deleteListItem(listId, id, callback) {
     const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
     const request = axios.delete(url, AXIOS_CONFIG())
-        .then(() => callback());
-
+        .then(() => {
+            toastSuccess('List Item was deleted successfully');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
     return {
         type: DELETE_LIST_ITEM,
         payload: id
@@ -151,15 +186,11 @@ export function deleteListItem(listId, id, callback) {
 export function loginUser(values, callback) {
     const url = `${ROOT_URL}/auth/login`;
     const request = axios.post(url, values, AXIOS_CONFIG())
-        .catch(function (error) {
-            //do this when login is not successful
-            console.log('This happened: ', JSON.stringify(error.response.data.message))
-        })
+        .catch((error) => toastError(error.response.data.message))
         .then((response) => {
             sessionStorage.setItem('access_token', response.data.access_token);
             callback();
         });
-
     return {
         type: LOGIN_USER,
         payload: request

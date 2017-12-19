@@ -4,7 +4,7 @@ import { createList } from '../actions/index';
 import ShoppingListForm from './shoppinglist_form';
 
 class CreateShoppingList extends Component {
-
+    
     onSubmit(values) {
         console.log('Form has been submited:', values);
         // Create shopping list and then redirect to list views

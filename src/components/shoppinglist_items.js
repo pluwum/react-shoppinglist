@@ -54,10 +54,10 @@ class ShoppingListItems extends Component {
     }
 
     render() {
-        const { shoppingListItems, match: { params: { id } } } = this.props;
-        console.log('going to show:', shoppingListItems.data);
+        const { shoppingListItems: { isFetching, data }, match: { params: { id } } } = this.props;
+        console.log('going to show:', data);
 
-        if(shoppingListItems.isFetching){
+        if(isFetching){
             return (
                 <Spinner/>
             );
