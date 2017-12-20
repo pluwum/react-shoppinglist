@@ -29,6 +29,7 @@ export const FETCH_LISTS = 'FETCH_LISTS';
 export const CREATE_LIST = 'CREATE_LIST';
 export const CREATE_USER = 'CREATE_USER';
 export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const EDIT_LIST = 'EDIT_LIST';
 export const EDIT_LIST_ITEM = 'EDIT_LIST_ITEM';
 export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
@@ -39,13 +40,11 @@ export const ADD_TO_LIST = 'ADD_TO_LIST';
 // Lets search all shopping lists here
 export function searchLists(term, callback) {
     const url = `${ROOT_URL}/shoppinglists/search/?q=${term}`;
-    const doStuff = () =>{
-        toastSuccess('Search was success');
-        callback();
-    }
 
     const request = axios.get(url, AXIOS_CONFIG())
-        .then(doStuff())
+        // .then(()=>{
+        //     callback();
+        // })
         .catch((error) => toastError(error.response.data.message));
 
     return {
@@ -193,6 +192,22 @@ export function loginUser(values, callback) {
         });
     return {
         type: LOGIN_USER,
+        payload: request
+    }
+}
+
+// Log out user
+export function logoutUser(callback) {
+    const url = `${ROOT_URL}/auth/logout`;
+
+    const request = axios.post(url, null, AXIOS_CONFIG())
+        .catch((error) => toastError(error.response.data.message))
+        .then((response) => {
+            sessionStorage.removeItem('access_token');
+            callback();
+        });
+    return {
+        type: LOGOUT_USER,
         payload: request
     }
 }

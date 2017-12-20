@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-export default class NavBarAuthed extends Component {
+import SearchBar from '../containers/search_bar';
+import { logoutUser } from '../actions/index';
+import { connect } from 'react-redux';
+
+class NavBarAuthed extends Component {
+    handleLogout(event){
+        event.preventDefault();
+        this.props.logoutUser(() => {
+            window.location = '/';
+        });
+    }
+
     render() {
         return (
             <div>
@@ -16,10 +27,16 @@ export default class NavBarAuthed extends Component {
                             </button>
                             <Link className="navbar-brand" to="/shoppinglists">Shopping List App</Link>
                         </div>
+                        
+                        <SearchBar/>
+
                         <div id="navbar" className="navbar-collapse collapse">
                             <ul className="nav navbar-nav">
                                 <li className="active">
                                     <Link to="/shoppinglists">View Lists</Link>
+                                </li>
+                                <li className="active">
+                                    <Link to="/shoppinglists/search">View Search</Link>
                                 </li>
                                 <li>
                                     <Link to="/shoppinglists/new">New List</Link>
@@ -27,7 +44,7 @@ export default class NavBarAuthed extends Component {
                             </ul>
                             <ul className="nav navbar-nav navbar-right">
                                 <li>
-                                    <Link to="/logout">Logout</Link>
+                                    <Link to="#" onClick={()=>this.handleLogout(event)}>Logout</Link>
                                 </li>
                                 <li className="dropdown">
                                     <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile
@@ -37,12 +54,9 @@ export default class NavBarAuthed extends Component {
                                         <li>
                                             <Link to="#">Change Password</Link>
                                         </li>
-                                        <li>
-                                            <Link to="#">Change Email</Link>
-                                        </li>
                                         <li role="separator" className="divider"></li>
                                         <li>
-                                            <Link to="/logout">Logout</Link>
+                                            <Link to="#" onClick={()=>this.handleLogout(event)}>Logout</Link>
                                         </li>
                                     </ul>
                                 </li>
@@ -55,3 +69,5 @@ export default class NavBarAuthed extends Component {
         );
     }
 }
+
+export default connect(null, { logoutUser })(NavBarAuthed);
