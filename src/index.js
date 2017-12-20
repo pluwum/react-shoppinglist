@@ -16,6 +16,7 @@ import Login from './components/login';
 import logger from 'redux-logger';
 import ProtectedRoute from './containers/protect_routes';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import SearchResults from './containers/search_result';
 
 const createStoreWithMiddleware = composeWithDevTools(applyMiddleware(ReduxPromise, logger))(createStore);
 
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/shoppinglists/auth/register" component={CreateAccount} />
           <ProtectedRoute path="/shoppinglists/new" component={CreateShoppingList} />
+          <ProtectedRoute path="/shoppinglists/search" component={SearchResults} />
           <ProtectedRoute path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
           <ProtectedRoute path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
           <ProtectedRoute path="/shoppinglists/:id/edit" component={EditShoppingList} />

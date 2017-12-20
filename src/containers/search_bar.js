@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { searchLists } from '../actions/index';
+
 export class SearchBar extends Component {
     constructor(props) {
         super(props);
@@ -18,7 +19,9 @@ export class SearchBar extends Component {
         console.log('Search form was submited');
 
         // Go to api and get results
-        this.props.searchLists(this.state.term);
+        this.props.searchLists(this.state.term,  () => {
+            this.props.history.push('/shoppinglists/search');
+        });
         this.setState({ term: '' });
     }
 
@@ -30,12 +33,15 @@ export class SearchBar extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleFormSubmit}>
-                <input
-                    onChange={this.handleInputChange}
-                    value={this.state.term}
-                />
-                <button type="submit">Search</button>
+            <form onSubmit={this.handleFormSubmit} className="navbar-form navbar-nav">
+                <div className="form-group">
+                    <input
+                        onChange={this.handleInputChange}
+                        value={this.state.term}
+                        className="form-control"
+                    />
+                </div>
+                <button type="submit" className="btn btn-success">Search</button>
             </form>);
     }
 }
