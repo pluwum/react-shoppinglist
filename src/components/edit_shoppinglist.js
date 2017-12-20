@@ -23,7 +23,7 @@ class EditShoppingList extends Component {
         return (
             <div>
                 <ShoppingListForm
-                    initialValues={this.props.shoppingLists[id]}
+                    initialValues={this.props.shoppingLists.data[id]}
                     onSubmit={this.onSubmit.bind(this)} id={id} />
             </div>
         );
