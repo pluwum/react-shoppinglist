@@ -12,6 +12,12 @@ class SearchResults extends Component {
 
     render() {
         console.log('To be displayed', this.props.searchResults);
+        
+        // Check if an array of results is returned
+        if(!Array.isArray(this.props.searchResults) || !this.props.searchResults.length){
+            return <div>No results found</div>
+        }
+        
         return (
             <table>
                 <thead>
@@ -27,7 +33,7 @@ class SearchResults extends Component {
     }
 }
 
-function mapStateToProps({ searchResults }) {
-    return { searchResults }
+function mapStateToProps(state) {
+    return { searchResults: state.searchResults }
 }
 export default connect(mapStateToProps)(SearchResults);
