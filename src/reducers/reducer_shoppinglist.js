@@ -30,7 +30,8 @@ export function ShoppingListsReducer(state = {}, action) {
                 ...state,
                 isFetching: false,
                 error: action.error,
-                data: _.mapKeys(action.payload.data, "id")
+                data: _.mapKeys(action.payload.data.data, "id"),
+                meta: action.payload.data.meta
             }
         case EDIT_LIST:
             return {
@@ -54,7 +55,8 @@ export function ShoppingListItemsReducer(state = {}, action) {
             return {
                 ...state,
                 isFetching: false,
-                data: _.mapKeys(action.payload.data, "id")
+                data: _.mapKeys(action.payload.data.data, "id"),
+                meta: action.payload.data.meta
             }
         case DELETE_LIST_ITEM:
             return _.omit(state, action.payload);
