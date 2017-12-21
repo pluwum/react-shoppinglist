@@ -36,6 +36,7 @@ export const FETCH_LIST_ITEMS = 'FETCH_LIST_ITEMS';
 export const DELETE_LIST = 'DELETE_LIST';
 export const DELETE_LIST_ITEM = 'DELETE_LIST_ITEM';
 export const ADD_TO_LIST = 'ADD_TO_LIST';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 // Lets search all shopping lists here
 export function searchLists(term, callback) {
@@ -209,5 +210,19 @@ export function logoutUser(callback) {
     return {
         type: LOGOUT_USER,
         payload: request
+    }
+}
+
+// Lets change user password
+export function changePassword(values, callback) {
+    const url = `${ROOT_URL}/auth/change-password`;
+    const request = axios.post(url, values, AXIOS_CONFIG())
+        .then(() => {
+            toastSuccess('User password changed successfully');
+            callback();
+        })
+        .catch((error) => toastError(error.response.data.message));
+    return {
+        type: CHANGE_PASSWORD
     }
 }

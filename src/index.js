@@ -11,6 +11,7 @@ import EditShoppingList from './components/edit_shoppinglist';
 import ShoppingListItems from './components/shoppinglist_items';
 import AddShoppingListItem from './components/add_shoppinglist_item';
 import EditShoppingListItem from './components/edit_shoppinglist_item';
+import ChangePassword from './components/change_password';
 import CreateAccount from './components/create_account';
 import Login from './components/login';
 import logger from 'redux-logger';
@@ -28,6 +29,7 @@ ReactDOM.render(
           <Route path="/shoppinglists/auth/register" component={CreateAccount} />
           <ProtectedRoute path="/shoppinglists/new" component={CreateShoppingList} />
           <ProtectedRoute path="/shoppinglists/search" component={SearchResults} />
+          <ProtectedRoute path="/shoppinglists/password/change" component={ChangePassword} />
           <ProtectedRoute path="/shoppinglists/:listId/items/new" component={AddShoppingListItem} />
           <ProtectedRoute path="/shoppinglists/:listId/items/:id" component={EditShoppingListItem} />
           <ProtectedRoute path="/shoppinglists/:id/edit" component={EditShoppingList} />

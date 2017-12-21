@@ -52,7 +52,7 @@ class NavBarAuthed extends Component {
                                     </Link>
                                     <ul className="dropdown-menu">
                                         <li>
-                                            <Link to="#">Change Password</Link>
+                                            <Link to="/shoppinglists/password/change">Change Password</Link>
                                         </li>
                                         <li role="separator" className="divider"></li>
                                         <li>
