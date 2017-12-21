@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { fetchLists } from '../actions/index';
 import { Link } from 'react-router-dom';
 import Spinner from './spinner';
+import Pagination from './pagination';
 
 class ShoppingLists extends Component {
+
     componentWillMount(){
         this.props.shoppingLists.isFetching = true;
     }
@@ -35,12 +37,8 @@ class ShoppingLists extends Component {
 
     render() {
         console.log("Loaded lists:", this.props.shoppingLists);
-        const { shoppingLists: { data, isFetching, error, message } } = this.props;
-        // if (message) {
-        //     return (
-        //         <SuccessToast message={message}/>
-        //     );
-        // }
+
+        const { shoppingLists: { data, isFetching, error, message, meta } } = this.props;
 
         if (error) {
             return (
@@ -82,6 +80,7 @@ class ShoppingLists extends Component {
                                 {this.renderShoppingLists()}
                             </tbody>
                         </table>
+                       <Pagination meta ={meta} onClick={this.props.fetchLists}/>
                     </div>
                 </div>
             </div>
@@ -90,7 +89,10 @@ class ShoppingLists extends Component {
 }
 
 function mapStateToProps(state) {
-    return { shoppingLists: state.shoppingLists, authData: state.shoppingListItems.data }
+    return { 
+        shoppingLists: state.shoppingLists, 
+        authData: state.shoppingListItems.data 
+    }
 }
 
 export default connect(mapStateToProps, { fetchLists })(ShoppingLists);

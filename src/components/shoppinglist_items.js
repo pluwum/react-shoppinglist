@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchListItems, deleteList, deleteListItem } from '../actions/index';
 import { Link } from 'react-router-dom';
 import Spinner from './spinner';
+import Pagination from './pagination';
 
 class ShoppingListItems extends Component {
 
@@ -15,9 +16,16 @@ class ShoppingListItems extends Component {
         this.props.fetchListItems(id);
     }
 
-    renderListItems() {
+    // Create a function to pass to pagination component
+    fetchListItems(page, limit){
         const { id } = this.props.match.params;
-        return _.map(this.props.shoppingListItems.data, item => {
+        this.props.fetchListItems(id, page, limit);
+    }
+
+    renderListItems() {
+        const { shoppingListItems, match : { params : { id } } } = this.props;
+
+        return _.map(shoppingListItems.data, item => {
             if (!item.id) {
                 return (<li key="1">No items found</li>);
             }
@@ -54,7 +62,7 @@ class ShoppingListItems extends Component {
     }
 
     render() {
-        const { shoppingListItems: { isFetching, data }, match: { params: { id } } } = this.props;
+        const { shoppingListItems: { isFetching, data, meta }, match: { params: { id } } } = this.props;
         console.log('going to show:', data);
 
         if(isFetching){
@@ -84,6 +92,7 @@ class ShoppingListItems extends Component {
                                 {this.renderListItems()}
                             </tbody>
                         </table>
+                        <Pagination meta ={meta} onClick={this.fetchListItems.bind(this)}/>
                     </div>
                 </div>
             </div >

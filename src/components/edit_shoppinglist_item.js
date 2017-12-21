@@ -12,18 +12,18 @@ class EditShoppingListItem extends Component {
 
     onSubmit(values) {
         console.log('Form has been submited:', values);
-        const { listId, id } = this.props.match.params;
+        const { history, match: { params: { listId, id } } } = this.props;
         this.props.editListItem(listId, id, values, () => {
             this.props.history.push(`/shoppinglists/${listId}/items`);
         });
     }
 
     render() {
-        const { id } = this.props.match.params;
+        const { shoppingListItems, match: {params: { id } } } = this.props;
         return (
             <div>
                 <ShoppingListItemForm
-                    initialValues={this.props.shoppingListItems[id]}
+                    initialValues={shoppingListItems.data[id]}
                     onSubmit={this.onSubmit.bind(this)} />
             </div>
         );

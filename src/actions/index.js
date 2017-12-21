@@ -55,8 +55,14 @@ export function searchLists(term, callback) {
 }
 
 // Lets get all shopping lists here
-export function fetchLists(id) {
-    const url = `${ROOT_URL}/shoppinglists/`;
+export function fetchLists(page = 1, limit = 4) {
+    var pagination = '';
+    // Check if we have pagination params
+    if((typeof(page) !== "undefined") && (typeof(limit) !== "undefined")){
+        pagination = `?limit=${limit}&page=${page}`;
+    }
+
+    const url = `${ROOT_URL}/shoppinglists/${pagination}`;
     const request = axios.get(url, AXIOS_CONFIG())
         .catch((error) => toastError(error.response.data.message));
 
@@ -142,8 +148,14 @@ export function addToList(listid, values, callback) {
 }
 
 // Lets get the items under shopping list with id
-export function fetchListItems(id) {
-    const url = `${ROOT_URL}/shoppinglists/${id}/items`;
+export function fetchListItems(id, page = 1, limit = 4) {
+    var pagination = '';
+    // Check if we have pagination params
+    if((typeof(page) !== "undefined") && (typeof(limit) !== "undefined")){
+        pagination = `?limit=${limit}&page=${page}`;
+    }
+
+    const url = `${ROOT_URL}/shoppinglists/${id}/items${pagination}`;
     const request = axios.get(url, AXIOS_CONFIG())
         .catch((error) => toastError(error.response.data.message));
     return {
