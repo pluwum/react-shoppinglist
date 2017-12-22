@@ -35,9 +35,6 @@ class NavBarAuthed extends Component {
                                 <li className="active">
                                     <Link to="/shoppinglists">View Lists</Link>
                                 </li>
-                                <li className="active">
-                                    <Link to="/shoppinglists/search">View Search</Link>
-                                </li>
                                 <li>
                                     <Link to="/shoppinglists/new">New List</Link>
                                 </li>

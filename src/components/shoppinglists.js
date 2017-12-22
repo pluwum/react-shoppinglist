@@ -54,10 +54,11 @@ class ShoppingLists extends Component {
             );
         }
 
-        if (!data) {
+        // Check if there data is not passed or if data is empty (helpful for search)
+        if (!data || !_.size(data)) {
             return (
                 <div className="alert alert-success">
-                    <strong>Opps! </strong> You have no Shopping Lists at the moment :-(. To create one, click <Link to="/shoppinglists/new">here</Link>
+                    <strong>Opps! </strong> You have no Shopping Lists matching this query at the moment :-(. To create one, click <Link to="/shoppinglists/new">here</Link>
                 </div>
             );
         }

@@ -40,16 +40,19 @@ export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 // Lets search all shopping lists here
 export function searchLists(term, callback) {
-    const url = `${ROOT_URL}/shoppinglists/search/?q=${term}`;
+    var pagination = '';
+    // Check if we have pagination params
+    if((typeof(page) !== "undefined") && (typeof(limit) !== "undefined")){
+        pagination = `&limit=${limit}&page=${page}`;
+    }
+
+    const url = `${ROOT_URL}/shoppinglists/search/?q=${term}${pagination}`;
 
     const request = axios.get(url, AXIOS_CONFIG())
-        // .then(()=>{
-        //     callback();
-        // })
         .catch((error) => toastError(error.response.data.message));
 
     return {
-        type: SEARCH_LISTS,
+        type: FETCH_LISTS,
         payload: request
     }
 }
