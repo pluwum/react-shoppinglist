@@ -22,6 +22,7 @@ This project is part of a submission for week two of Andela BootCamp UG CH3 2017
         - git clone -b develop https://github.com/pluwum/react-shoppinglist.git
     2. Start the application
         - cd react-shoppinglist
+        - npm install
         - npm start
     3. You can now Open your browser and navigate to the server address indicated in `npm start` command above.
 
