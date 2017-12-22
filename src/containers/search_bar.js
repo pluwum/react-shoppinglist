@@ -16,13 +16,12 @@ export class SearchBar extends Component {
     // Handle form submission
     handleFormSubmit(event) {
         event.preventDefault();
-        console.log('Search form was submited');
 
         // Go to api and get results
-        this.props.searchLists(this.state.term,  () => {
-            this.props.history.push('/shoppinglists/search');
-        });
-        this.setState({ term: '' });
+        this.props.searchLists(this.state.term);
+
+        // Clear search field when user clicks search
+        //this.setState({ term: '' });
     }
 
     // Handle user entering search text
