@@ -14,9 +14,9 @@ This project is part of a submission for week two of Andela BootCamp UG CH3 2017
 
 # Installation
  ### Prerequisites
-    1. [npm](https://docs.npmjs.com/getting-started/installing-node)
-    2. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-    3. [Shoppinglist API](https://github.com/pluwum/shopping-list-api)
+    1. [npm](https://docs.npmjs.com/getting-started/installing-node)]
+    2. [[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)]
+    3. [[Shoppinglist API](https://github.com/pluwum/shopping-list-api)]
  ### SetUp
     1. Grab the project files from git.
         - git clone -b develop https://github.com/pluwum/react-shoppinglist.git
