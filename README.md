@@ -13,11 +13,11 @@ This is a simple shopping list application written in React-Redux. The Applicati
 This project is part of a submission for week two of Andela BootCamp UG CH3 2017. All the features available are developed as specified by the requirements specifications document.
 
 # Installation
- ## Prerequisites
+ ### Prerequisites
     1. [npm](https://docs.npmjs.com/getting-started/installing-node)
     2. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
     3. [Shoppinglist API](https://github.com/pluwum/shopping-list-api)
- ## SetUp
+ ### SetUp
     1. Grab the project files from git.
         - ``git clone -b develop https://github.com/pluwum/react-shoppinglist.git``
     2. Start the application
