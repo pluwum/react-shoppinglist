@@ -1,5 +1,5 @@
 import axios from "axios";
-import toastr from "toastr";
+import { toastError, toastSuccess } from "../misc/notifications";
 
 const ROOT_URL = "http://localhost:5000/v1";
 const AXIOS_CONFIG = function() {
@@ -11,14 +11,6 @@ const AXIOS_CONFIG = function() {
       "Access-Control-Allow-Origin": "*"
     }
   };
-};
-
-const toastError = message => {
-  toastr.error(message, "Opps!! Operation failed miserably:");
-};
-
-const toastSuccess = message => {
-  toastr.success(message, "Yaay!! Operation was successful:");
 };
 
 // Store action type as constant for easy modification in the future
@@ -176,13 +168,7 @@ export function fetchListItems(id, page = 1, limit = 4) {
 // Lets delete the shopping list with id
 export function deleteList(id, callback) {
   const url = `${ROOT_URL}/shoppinglists/${id}`;
-  const request = axios
-    .delete(url, AXIOS_CONFIG())
-    .then(() => {
-      toastSuccess("List was deleted successfully");
-      callback();
-    })
-    .catch(error => toastError(error.response.data.message));
+  const request = axios.delete(url, AXIOS_CONFIG());
   return {
     type: DELETE_LIST,
     payload: id

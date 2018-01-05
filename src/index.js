@@ -17,9 +17,10 @@ import Login from "./components/login";
 import logger from "redux-logger";
 import ProtectedRoute from "./containers/protect_routes";
 import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 
 const createStoreWithMiddleware = composeWithDevTools(
-  applyMiddleware(ReduxPromise, logger)
+  applyMiddleware(ReduxPromise, logger, thunk)
 )(createStore);
 
 ReactDOM.render(

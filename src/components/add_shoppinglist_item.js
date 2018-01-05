@@ -15,7 +15,10 @@ class AddShoppingListItem extends Component {
   render() {
     return (
       <div>
-        <ShoppingListItemForm onSubmit={this.onSubmit.bind(this)} />
+        <ShoppingListItemForm
+          onSubmit={this.onSubmit.bind(this)}
+          title="Create Shopping list Item"
+        />
       </div>
     );
   }

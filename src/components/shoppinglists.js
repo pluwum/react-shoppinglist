@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchLists } from "../actions/index";
+import { deleteList, fetchLists } from "../actions/index";
 import { Link } from "react-router-dom";
 import Spinner from "./spinner";
 import Pagination from "./pagination";
@@ -13,6 +13,13 @@ class ShoppingLists extends Component {
 
   componentDidMount() {
     this.props.fetchLists();
+  }
+
+  handleDelete(id) {
+    console.log("You are trying to delete:", id);
+    this.props.deleteList(id, () => {
+      this.props.history.push("/shoppinglists/");
+    });
   }
 
   renderShoppingLists() {
@@ -36,7 +43,12 @@ class ShoppingLists extends Component {
               >
                 Edit
               </Link>
-              <button className="btn btn-sm btn-danger">Delete</button>
+              <button
+                className="btn btn-sm btn-danger"
+                onClick={() => this.handleDelete(shoppinglist.id)}
+              >
+                Delete
+              </button>
             </div>
           </td>
         </tr>
@@ -107,4 +119,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchLists })(ShoppingLists);
+export default connect(mapStateToProps, { deleteList, fetchLists })(
+  ShoppingLists
+);

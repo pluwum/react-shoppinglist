@@ -6,7 +6,8 @@ import ShoppingListForm from "./shoppinglist_form";
 class EditShoppingList extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchLists(id);
+    //this.props.fetchLists(id);
+    this.props.fetchLists();
   }
 
   onSubmit(values) {
@@ -26,6 +27,7 @@ class EditShoppingList extends Component {
           initialValues={this.props.shoppingLists.data[id]}
           onSubmit={this.onSubmit.bind(this)}
           id={id}
+          title="Edit Shopping list"
         />
       </div>
     );

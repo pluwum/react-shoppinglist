@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchListItems, deleteList, deleteListItem } from "../actions/index";
+import { fetchListItems, deleteListItem } from "../actions/index";
 import { Link } from "react-router-dom";
 import Spinner from "./spinner";
 import Pagination from "./pagination";
+import { toastError, toastSuccess } from "../misc/notifications";
 
 class ShoppingListItems extends Component {
   componentWillMount() {
@@ -34,7 +35,7 @@ class ShoppingListItems extends Component {
           <td />
           <td>{item.name}</td>
           <td>{item.description}</td>
-          <td>
+          <td className="pull-right">
             <Link
               to={`/shoppinglists/${id}/items/${item.id}`}
               className="btn btn-info"
@@ -58,14 +59,6 @@ class ShoppingListItems extends Component {
     console.log("You are trying to delete:", itemId);
     this.props.deleteListItem(listId, itemId, () => {
       this.props.history.push(`/shoppinglists/${listId}`);
-    });
-  }
-
-  handleDelete() {
-    const { id } = this.props.match.params;
-    console.log("You are trying to delete:", id);
-    this.props.deleteList(id, () => {
-      this.props.history.push("/shoppinglists/");
     });
   }
 
@@ -96,7 +89,7 @@ class ShoppingListItems extends Component {
                   <th>#</th>
                   <th>Name</th>
                   <th>Description</th>
-                  <th>Actions</th>
+                  <th className="pull-right">Actions</th>
                 </tr>
               </thead>
               <tbody>{this.renderListItems()}</tbody>
@@ -115,6 +108,5 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   fetchListItems,
-  deleteList,
   deleteListItem
 })(ShoppingListItems);

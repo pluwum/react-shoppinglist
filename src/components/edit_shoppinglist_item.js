@@ -24,6 +24,7 @@ class EditShoppingListItem extends Component {
         <ShoppingListItemForm
           initialValues={shoppingListItems.data[id]}
           onSubmit={this.onSubmit.bind(this)}
+          title="Edit Shopping list Item"
         />
       </div>
     );

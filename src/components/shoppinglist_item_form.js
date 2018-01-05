@@ -18,12 +18,16 @@ class ShoppingListItemForm extends Component {
   }
 
   render() {
-    const { handleSubmit, onSubmit } = this.props;
+    const { handleSubmit, onSubmit, title } = this.props;
+    if (!title) {
+      return <div>Form Was Not Configured Properly. Please Add title</div>;
+    }
+
     return (
       <div className="row">
         <div className="col-md-5 col-md-offset-4 well well-lg">
           <div id="login">
-            <h1>Update Item</h1>
+            <h1>{title}</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Field
                 name="name"
