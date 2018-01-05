@@ -1,12 +1,12 @@
 import {
   SEARCH_LISTS,
-  FETCH_LISTS,
   FETCH_LIST_ITEMS,
   DELETE_LIST,
   DELETE_LIST_ITEM,
   LOGIN_USER,
   EDIT_LIST,
-  LOGOUT_USER
+  LOGOUT_USER,
+  FETCH_LISTS_SUCCESS
 } from "../actions/index";
 import _ from "lodash";
 
@@ -24,14 +24,14 @@ export function SearchResultReducer(state = [], action) {
 export function ShoppingListsReducer(state = {}, action) {
   console.log("action received:", action);
   switch (action.type) {
-    case FETCH_LISTS:
+    case FETCH_LISTS_SUCCESS:
       console.log("Shopping list found: ", action);
       return {
         ...state,
         isFetching: false,
         error: action.error,
-        data: _.mapKeys(action.payload.data.data, "id"),
-        meta: action.payload.data.meta
+        data: _.mapKeys(action.payload.data, "id"),
+        meta: action.payload.meta
       };
     case EDIT_LIST:
       return {

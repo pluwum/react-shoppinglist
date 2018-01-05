@@ -14,9 +14,17 @@ const AXIOS_CONFIG = function() {
 };
 
 // Store action type as constant for easy modification in the future
+
 export const SEARCH_LISTS = "SEARCH_LISTS";
-export const FETCH_LISTS = "FETCH_LISTS";
-export const CREATE_LIST = "CREATE_LIST";
+
+export const FETCH_LISTS_REQUEST = "FETCH_LISTS_REQUEST";
+export const FETCH_LISTS_FAILURE = "FETCH_LISTS_FAILURE";
+export const FETCH_LISTS_SUCCESS = "FETCH_LISTS_SUCCESS";
+
+export const CREATE_LIST_REQUEST = "CREATE_LIST_REQUEST";
+export const CREATE_LIST_FAILURE = "CREATE_LIST_FAILURE";
+export const CREATE_LIST_SUCCESS = "CREATE_LIST_SUCCESS";
+
 export const CREATE_USER = "CREATE_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
@@ -28,23 +36,18 @@ export const DELETE_LIST_ITEM = "DELETE_LIST_ITEM";
 export const ADD_TO_LIST = "ADD_TO_LIST";
 export const CHANGE_PASSWORD = "CHANGE_PASSWORD";
 
-// Lets search all shopping lists here
-export function searchLists(term, callback) {
-  var pagination = "";
-  // Check if we have pagination params
-  if (typeof page !== "undefined" && typeof limit !== "undefined") {
-    pagination = `&limit=${limit}&page=${page}`;
-  }
-
-  const url = `${ROOT_URL}/shoppinglists/search/?q=${term}${pagination}`;
-
-  const request = axios
-    .get(url, AXIOS_CONFIG())
-    .catch(error => toastError(error.response.data.message));
-
+// when we want to start fetching our lists
+function requestLists() {
   return {
-    type: FETCH_LISTS,
-    payload: request
+    type: FETCH_LISTS_REQUEST
+  };
+}
+
+// When we get our requested lists
+function receiveLists(data) {
+  return {
+    type: FETCH_LISTS_SUCCESS,
+    payload: data
   };
 }
 
@@ -57,13 +60,39 @@ export function fetchLists(page = 1, limit = 4) {
   }
 
   const url = `${ROOT_URL}/shoppinglists/${pagination}`;
-  const request = axios
-    .get(url, AXIOS_CONFIG())
-    .catch(error => toastError(error.response.data.message));
+  const request = axios.get(url, AXIOS_CONFIG());
 
-  return {
-    type: FETCH_LISTS,
-    payload: request
+  return function(dispatch) {
+    // Update app state to let the app know the request is starting
+    dispatch(requestLists());
+
+    return request.then(
+      ({ data }) => dispatch(receiveLists(data)),
+      error => toastError(error.response.data.message)
+    );
+  };
+}
+
+// Lets search all shopping lists here
+export function searchLists(term, callback) {
+  var pagination = "";
+  // Check if we have pagination params
+  if (typeof page !== "undefined" && typeof limit !== "undefined") {
+    pagination = `&limit=${limit}&page=${page}`;
+  }
+
+  const url = `${ROOT_URL}/shoppinglists/search/?q=${term}${pagination}`;
+
+  const request = axios.get(url, AXIOS_CONFIG());
+
+  return function(dispatch) {
+    // Update app state to let the app know the request is starting
+    dispatch(requestLists());
+
+    return request.then(
+      ({ data }) => dispatch(receiveLists(data)),
+      error => toastError(error.response.data.message)
+    );
   };
 }
 
