@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { Link } from "react-router-dom";
+import { changePassword } from "../../actions/index";
 import { connect } from "react-redux";
-import { loginUser } from "../actions/index";
-import NavBarUnAuthed from "./nav_bar_unauthed";
-class Login extends Component {
+
+class ChangePassword extends Component {
   onSubmit(values) {
     console.log("Form has been submited:", values);
-    this.props.loginUser(values, () => {
-      console.log("trying to login", this.props.history);
+    this.props.changePassword(values, () => {
       this.props.history.push("/shoppinglists");
     });
   }
@@ -30,27 +30,32 @@ class Login extends Component {
     const { handleSubmit } = this.props;
     return (
       <div>
-        <NavBarUnAuthed />
         <div className="row">
-          <div className="col-md-4 col-md-offset-4 well well-lg">
+          <div className="col-md-5 col-md-offset-4 well well-lg">
             <div id="login">
-              <h1>Please Login!</h1>
-              <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+              <h1>Change Password</h1>
+              <form
+                className="form-horizontal"
+                onSubmit={handleSubmit(this.onSubmit.bind(this))}
+              >
                 <Field
-                  name="email"
-                  label="Email"
-                  type="text"
+                  name="password"
+                  label="New Password"
+                  type="password"
                   component={this.renderField}
                 />
                 <Field
-                  name="password"
-                  label="Password"
+                  name="repassword"
+                  label="Confirm New Password"
                   type="password"
                   component={this.renderField}
                 />
                 <button type="submit" className="btn btn-primary">
-                  Login{" "}
+                  Change{" "}
                 </button>
+                <Link to="/" className="btn btn-danger">
+                  Cancel
+                </Link>
               </form>
             </div>
           </div>
@@ -62,17 +67,17 @@ class Login extends Component {
 
 function validate(values) {
   const errors = {};
-  if (!values.email || values.email.length < 3) {
-    errors.email = "Enter valid email address!";
-  }
 
   if (!values.password || values.password.length < 3) {
-    errors.password = "Enter a valid password!";
+    errors.password = "Enter title that is more than three characters !";
+  }
+  if (values.password != values.repassword) {
+    errors.repassword = "Passwords do not match. Please verify!";
   }
   return errors;
 }
 
 export default reduxForm({
   validate,
-  form: "LoginForm"
-})(connect(null, { loginUser })(Login));
+  form: "ChangePasswordForm"
+})(connect(null, { changePassword })(ChangePassword));

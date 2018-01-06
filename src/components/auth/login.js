@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
-import { createUser } from "../actions/index";
 import { connect } from "react-redux";
-import NavBarUnAuthed from "./nav_bar_unauthed";
-class CreateAccount extends Component {
+import { loginUser } from "../../actions/index";
+import NavBarUnAuthed from "../nav/guest";
+
+class Login extends Component {
   onSubmit(values) {
     console.log("Form has been submited:", values);
-    this.props.createUser(values, () => {
-      this.props.history.push("/");
+    this.props.loginUser(values, () => {
+      console.log("trying to login", this.props.history);
+      this.props.history.push("/shoppinglists");
     });
   }
 
@@ -32,13 +33,10 @@ class CreateAccount extends Component {
       <div>
         <NavBarUnAuthed />
         <div className="row">
-          <div className="col-md-5 col-md-offset-4 well well-lg">
+          <div className="col-md-4 col-md-offset-4 well well-lg">
             <div id="login">
-              <h1>Register for an account</h1>
-              <form
-                className="form-horizontal"
-                onSubmit={handleSubmit(this.onSubmit.bind(this))}
-              >
+              <h1>Please Login!</h1>
+              <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field
                   name="email"
                   label="Email"
@@ -51,18 +49,9 @@ class CreateAccount extends Component {
                   type="password"
                   component={this.renderField}
                 />
-                <Field
-                  name="repassword"
-                  label="Confirm Password"
-                  type="password"
-                  component={this.renderField}
-                />
                 <button type="submit" className="btn btn-primary">
-                  Register{" "}
+                  Login{" "}
                 </button>
-                <Link to="/" className="btn btn-danger">
-                  Cancel
-                </Link>
               </form>
             </div>
           </div>
@@ -75,19 +64,16 @@ class CreateAccount extends Component {
 function validate(values) {
   const errors = {};
   if (!values.email || values.email.length < 3) {
-    errors.email = "Enter title that is more than three characters !";
+    errors.email = "Enter valid email address!";
   }
 
   if (!values.password || values.password.length < 3) {
-    errors.password = "Enter title that is more than three characters !";
-  }
-  if (values.password != values.repassword) {
-    errors.repassword = "Passwords do not match. Please verify!";
+    errors.password = "Enter a valid password!";
   }
   return errors;
 }
 
 export default reduxForm({
   validate,
-  form: "CreateAccountForm"
-})(connect(null, { createUser })(CreateAccount));
+  form: "LoginForm"
+})(connect(null, { loginUser })(Login));

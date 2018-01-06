@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import NavBarAuthed from "../components/nav_bar_authed";
+import NavBarAuthed from "../nav/authed";
+
 export class ProtectedRoute extends Component {
   isLoggedIn() {
     const access_token = sessionStorage.getItem("access_token");

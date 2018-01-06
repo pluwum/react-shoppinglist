@@ -1,16 +1,12 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { deleteList, fetchLists } from "../actions/index";
+import { deleteList, fetchLists } from "../../actions/index";
 import { Link } from "react-router-dom";
-import Spinner from "./spinner";
-import Pagination from "./pagination";
+import Spinner from "../misc/spinner";
+import Pagination from "../misc/pagination";
 
 class ShoppingLists extends Component {
-  componentWillMount() {
-    this.props.shoppingLists.isFetching = true;
-  }
-
   componentDidMount() {
     this.props.fetchLists();
   }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchListItems, editListItem } from "../actions/index";
-import ShoppingListItemForm from "./shoppinglist_item_form";
+import { fetchListItems, editListItem } from "../../actions/index";
+import ShoppingListItemForm from "./form";
 
 class EditShoppingListItem extends Component {
   componentDidMount() {

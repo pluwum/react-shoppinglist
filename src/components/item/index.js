@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchListItems, deleteListItem } from "../actions/index";
+import { fetchListItems, deleteListItem } from "../../actions/index";
 import { Link } from "react-router-dom";
-import Spinner from "./spinner";
-import Pagination from "./pagination";
-import { toastError, toastSuccess } from "../misc/notifications";
+import Spinner from "../misc/spinner";
+import Pagination from "../misc/pagination";
+import { toastError, toastSuccess } from "../../helpers/notifications";
 
 class ShoppingListItems extends Component {
-  componentWillMount() {
-    this.props.shoppingListItems.isFetching = true;
-  }
-
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchListItems(id);
@@ -67,7 +63,6 @@ class ShoppingListItems extends Component {
       shoppingListItems: { isFetching, data, meta },
       match: { params: { id } }
     } = this.props;
-    console.log("going to show:", data);
 
     if (isFetching) {
       return <Spinner />;

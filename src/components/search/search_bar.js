@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { searchLists } from "../actions/index";
+import { searchLists } from "../../actions/index";
 
 export class SearchBar extends Component {
   constructor(props) {

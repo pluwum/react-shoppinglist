@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toastError, toastSuccess } from "../misc/notifications";
+import { toastError, toastSuccess } from "../helpers/notifications";
 
 const ROOT_URL = "http://localhost:5000/v1";
 const AXIOS_CONFIG = function() {

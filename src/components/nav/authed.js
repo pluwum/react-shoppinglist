@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "../containers/search_bar";
-import { logoutUser } from "../actions/index";
+import SearchBar from "../search/search_bar";
+import { logoutUser } from "../../actions/index";
 import { connect } from "react-redux";
 
 class NavBarAuthed extends Component {
