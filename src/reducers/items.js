@@ -1,9 +1,9 @@
+import _ from "lodash";
 import {
   FETCH_LIST_ITEMS_SUCCESS,
   DELETE_LIST_ITEM_SUCCESS,
   FETCH_LIST_ITEMS_REQUEST
-} from "../actions/index";
-import _ from "lodash";
+} from "../actions/types";
 
 export function ShoppingListItemsReducer(state = {}, action) {
   switch (action.type) {

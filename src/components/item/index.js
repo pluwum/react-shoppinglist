@@ -7,6 +7,10 @@ import Pagination from "../misc/pagination";
 import { toastError, toastSuccess } from "../../helpers/notifications";
 
 class ShoppingListItems extends Component {
+  componentWillMount() {
+    this.props.shoppingListItems.isFetching = true;
+  }
+
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchListItems(id);

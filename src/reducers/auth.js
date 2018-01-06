@@ -1,4 +1,4 @@
-import { LOGIN_USER_SUCCESS, LOGOUT_USER_SUCCESS } from "../actions/index";
+import { LOGIN_USER_SUCCESS, LOGOUT_USER_SUCCESS } from "../actions/types";
 
 export function AuthReducer(state = {}, action) {
   switch (action.type) {

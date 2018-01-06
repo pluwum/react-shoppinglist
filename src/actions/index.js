@@ -1,69 +1,7 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../helpers/notifications";
-
-const ROOT_URL = "http://localhost:5000/v1";
-const AXIOS_CONFIG = function() {
-  const ACCESS_TOKEN = sessionStorage.getItem("access_token");
-  return {
-    headers: {
-      Authorization: `Bearer ${ACCESS_TOKEN}`,
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
-    }
-  };
-};
-
-// Store action type as constant for easy modification in the future
-
-export const FETCH_LISTS_REQUEST = "FETCH_LISTS_REQUEST";
-export const FETCH_LISTS_FAILURE = "FETCH_LISTS_FAILURE";
-export const FETCH_LISTS_SUCCESS = "FETCH_LISTS_SUCCESS";
-
-export const CREATE_LIST_REQUEST = "CREATE_LIST_REQUEST";
-export const CREATE_LIST_FAILURE = "CREATE_LIST_FAILURE";
-export const CREATE_LIST_SUCCESS = "CREATE_LIST_SUCCESS";
-
-export const CREATE_USER_REQUEST = "CREATE_USER_REQUEST";
-export const CREATE_USER_FAILURE = "CREATE_USER_FAILURE";
-export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
-
-export const EDIT_LIST_REQUEST = "EDIT_LIST_REQUEST";
-export const EDIT_LIST_FAILURE = "EDIT_LIST_FAILURE";
-export const EDIT_LIST_SUCCESS = "EDIT_LIST_SUCCESS";
-
-export const ADD_TO_LIST_REQUEST = "ADD_TO_LIST_REQUEST";
-export const ADD_TO_LIST_FAILURE = "ADD_TO_LIST_FAILURE";
-export const ADD_TO_LIST_SUCCESS = "ADD_TO_LIST_SUCCESS";
-
-export const DELETE_LIST_REQUEST = "DELETE_LIST_REQUEST";
-export const DELETE_LIST_FAILURE = "DELETE_LIST_FAILURE";
-export const DELETE_LIST_SUCCESS = "DELETE_LIST_SUCCESS";
-
-export const EDIT_LIST_ITEM_REQUEST = "EDIT_LIST_ITEM_REQUEST";
-export const EDIT_LIST_ITEM_FAILURE = "EDIT_LIST_ITEM_FAILURE";
-export const EDIT_LIST_ITEM_SUCCESS = "EDIT_LIST_ITEM_SUCCESS";
-
-export const FETCH_LIST_ITEMS_REQUEST = "FETCH_LIST_ITEMS_REQUEST";
-export const FETCH_LIST_ITEMS_FAILURE = "FETCH_LIST_ITEMS_FAILURE";
-export const FETCH_LIST_ITEMS_SUCCESS = "FETCH_LIST_ITEMS_SUCCESS";
-
-export const DELETE_LIST_ITEM_REQUEST = "DELETE_LIST_ITEM_REQUEST";
-export const DELETE_LIST_ITEM_FAILURE = "DELETE_LIST_ITEM_FAILURE";
-export const DELETE_LIST_ITEM_SUCCESS = "DELETE_LIST_ITEM_SUCCESS";
-
-// Authentication
-
-export const LOGIN_USER_REQUEST = "LOGIN_USER_REQUEST";
-export const LOGIN_USER_FAILURE = "LOGIN_USER_FAILURE";
-export const LOGIN_USER_SUCCESS = "LOGIN_USER_SUCCESS";
-
-export const LOGOUT_USER_REQUEST = "LOGOUT_USER_REQUEST";
-export const LOGOUT_USER_FAILURE = "LOGOUT_USER_FAILURE";
-export const LOGOUT_USER_SUCCESS = "LOGOUT_USER_SUCCESS";
-
-export const CHANGE_PASSWORD_REQUEST = "CHANGE_PASSWORD_REQUEST";
-export const CHANGE_PASSWORD_FAILURE = "CHANGE_PASSWORD_FAILURE";
-export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
+import { ROOT_URL, AXIOS_CONFIG } from "../configs/axios";
+import * as types from "./types";
 
 // Prepare pagination parameters
 function paginationParams(page, limit) {
@@ -75,17 +13,29 @@ function paginationParams(page, limit) {
   return pagination;
 }
 
+// separate network errors from API errors
+function getErrorMessage(error) {
+  let message = "An undefined error occured";
+
+  if (typeof error.response != "undefined") {
+    message = error.response.data.message;
+  } else {
+    message = error.message;
+  }
+  return message;
+}
+
 // when we want to start fetching our lists
 function requestLists() {
   return {
-    type: FETCH_LISTS_REQUEST
+    type: types.FETCH_LISTS_REQUEST
   };
 }
 
 // When we get our requested lists
 function receiveLists(data) {
   return {
-    type: FETCH_LISTS_SUCCESS,
+    type: types.FETCH_LISTS_SUCCESS,
     payload: data
   };
 }
@@ -103,7 +53,10 @@ export function fetchLists(page = 1, limit = 4) {
 
     return request.then(
       ({ data }) => dispatch(receiveLists(data)),
-      error => toastError(error)
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
     );
   };
 }
@@ -122,7 +75,10 @@ export function searchLists(term, callback) {
 
     return request.then(
       ({ data }) => dispatch(receiveLists(data)),
-      error => toastError(error)
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
     );
   };
 }
@@ -130,15 +86,23 @@ export function searchLists(term, callback) {
 // when we want to start creating our list
 function requestCreateList() {
   return {
-    type: CREATE_LIST_REQUEST
+    type: types.CREATE_LIST_REQUEST
   };
 }
 
 // When our list is created and a response is returned
 function receiveCreateList(data) {
   return {
-    type: CREATE_LIST_SUCCESS,
+    type: types.CREATE_LIST_SUCCESS,
     payload: data
+  };
+}
+
+// If creating a list fails
+function failCreateList(error) {
+  return {
+    type: types.CREATE_LIST_FAILURE,
+    payload: error
   };
 }
 
@@ -151,23 +115,32 @@ export function createList(values, callback) {
     // Update app state to let the app know the request is starting
     dispatch(requestCreateList());
 
-    return request
-      .then(() => callback(), error => toastError(error))
-      .then(data => dispatch(receiveCreateList(data)));
+    return request.then(
+      () => {
+        toastSuccess("List was created successfully");
+        callback();
+      },
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+        dispatch(failCreateList(message));
+      }
+    );
+    //.then(data => dispatch(receiveCreateList(data)));
   };
 }
 
 // when we want to start creating our user
 function requestCreateUser() {
   return {
-    type: CREATE_USER_REQUEST
+    type: types.CREATE_USER_REQUEST
   };
 }
 
 // When our list is created and a response is returned
 function receiveCreateUser(data) {
   return {
-    type: CREATE_USER_SUCCESS,
+    type: types.CREATE_USER_SUCCESS,
     payload: data
   };
 }
@@ -182,7 +155,16 @@ export function createUser(values, callback) {
     dispatch(requestCreateUser());
 
     return request
-      .then(() => callback(), error => toastError(error))
+      .then(
+        () => {
+          toastSuccess("User was created successfully");
+          callback();
+        },
+        error => {
+          let message = getErrorMessage(error);
+          toastError(message);
+        }
+      )
       .then(data => dispatch(receiveCreateUser(data)));
   };
 }
@@ -190,14 +172,14 @@ export function createUser(values, callback) {
 // when we want to start editing our user
 function requestEditList() {
   return {
-    type: EDIT_LIST_REQUEST
+    type: types.EDIT_LIST_REQUEST
   };
 }
 
 // When our list is edited and a response is returned
 function receiveEditList(data) {
   return {
-    type: EDIT_LIST_SUCCESS,
+    type: types.EDIT_LIST_SUCCESS,
     payload: data
   };
 }
@@ -212,7 +194,16 @@ export function editList(id, values, callback) {
     dispatch(requestEditList());
 
     return request
-      .then(() => callback(), error => toastError(error))
+      .then(
+        () => {
+          toastSuccess("List was edited successfully");
+          callback();
+        },
+        error => {
+          let message = getErrorMessage(error);
+          toastError(message);
+        }
+      )
       .then(data => dispatch(receiveEditList(data)));
   };
 }
@@ -220,14 +211,14 @@ export function editList(id, values, callback) {
 // when we want to start deleting our list
 function requestDeleteList() {
   return {
-    type: DELETE_LIST_REQUEST
+    type: types.DELETE_LIST_REQUEST
   };
 }
 
 // When our list is deleted and a response is returned
 function receiveDeleteList(data) {
   return {
-    type: DELETE_LIST_SUCCESS,
+    type: types.DELETE_LIST_SUCCESS,
     payload: data
   };
 }
@@ -243,8 +234,14 @@ export function deleteList(id, callback) {
 
     return request.then(
       // Refresh data
-      ({ data }) => dispatch(fetchLists()),
-      error => toastError(error)
+      ({ data }) => {
+        toastSuccess("List was deleted successfully");
+        dispatch(fetchLists());
+      },
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
     );
   };
 }
@@ -252,14 +249,14 @@ export function deleteList(id, callback) {
 // when we want to start editing our item
 function requestEditListItem() {
   return {
-    type: EDIT_LIST_ITEM_REQUEST
+    type: types.EDIT_LIST_ITEM_REQUEST
   };
 }
 
 // When our item is edited and a response is returned
 function receiveEditListItem(data) {
   return {
-    type: EDIT_LIST_ITEM_SUCCESS,
+    type: types.EDIT_LIST_ITEM_SUCCESS,
     payload: data
   };
 }
@@ -274,7 +271,16 @@ export function editListItem(listId, id, values, callback) {
     dispatch(requestEditListItem());
 
     return request
-      .then(() => callback(), error => toastError(error))
+      .then(
+        () => {
+          toastSuccess("Item was edited successfully");
+          callback();
+        },
+        error => {
+          let message = getErrorMessage(error);
+          toastError(message);
+        }
+      )
       .then(data => dispatch(receiveEditListItem(data)));
   };
 }
@@ -282,14 +288,14 @@ export function editListItem(listId, id, values, callback) {
 // when we want to start adding item to  our list
 function requestAddToList() {
   return {
-    type: ADD_TO_LIST_REQUEST
+    type: types.ADD_TO_LIST_REQUEST
   };
 }
 
 // When our item is added and a response is returned
 function receiveAddToList(data) {
   return {
-    type: ADD_TO_LIST_SUCCESS,
+    type: types.ADD_TO_LIST_SUCCESS,
     payload: data
   };
 }
@@ -304,7 +310,16 @@ export function addToList(listid, values, callback) {
     dispatch(requestAddToList());
 
     return request
-      .then(() => callback(), error => toastError(error))
+      .then(
+        () => {
+          toastSuccess("Item was added successfully");
+          callback();
+        },
+        error => {
+          let message = getErrorMessage(error);
+          toastError(message);
+        }
+      )
       .then(data => dispatch(receiveAddToList(data)));
   };
 }
@@ -312,20 +327,20 @@ export function addToList(listid, values, callback) {
 // when we want to start fetching our list items
 function requestListItems() {
   return {
-    type: FETCH_LIST_ITEMS_REQUEST
+    type: types.FETCH_LIST_ITEMS_REQUEST
   };
 }
 
 // When we get our requested list items
 function receiveListItems(data) {
   return {
-    type: FETCH_LIST_ITEMS_SUCCESS,
+    type: types.FETCH_LIST_ITEMS_SUCCESS,
     payload: data
   };
 }
 
 // Lets get the items under shopping list with id
-export function fetchListItems(id, page = 1, limit = 4) {
+export function fetchListItems(id, page = 1, limit = 1) {
   var pagination = paginationParams(page, limit);
 
   const url = `${ROOT_URL}/shoppinglists/${id}/items${pagination}`;
@@ -335,8 +350,13 @@ export function fetchListItems(id, page = 1, limit = 4) {
     dispatch(requestListItems());
 
     return request.then(
-      ({ data }) => dispatch(receiveListItems(data)),
-      error => toastError(error)
+      ({ data }) => {
+        dispatch(receiveListItems(data));
+      },
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
     );
   };
 }
@@ -344,14 +364,14 @@ export function fetchListItems(id, page = 1, limit = 4) {
 // when we want to start deleting our item
 function requestDeleteListItem() {
   return {
-    type: DELETE_LIST_ITEM_REQUEST
+    type: types.DELETE_LIST_ITEM_REQUEST
   };
 }
 
 // When our list is deleted and a response is returned
 function receiveDeleteListItem(data) {
   return {
-    type: DELETE_LIST_ITEM_SUCCESS,
+    type: types.DELETE_LIST_ITEM_SUCCESS,
     payload: data
   };
 }
@@ -367,8 +387,14 @@ export function deleteListItem(listId, id, callback) {
 
     return request.then(
       // Refresh data
-      ({ data }) => dispatch(fetchListItems(listId)),
-      error => toastError(error)
+      ({ data }) => {
+        toastSuccess("Item was deleted successfully");
+        dispatch(fetchListItems(listId));
+      },
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
     );
   };
 }
@@ -376,14 +402,14 @@ export function deleteListItem(listId, id, callback) {
 // when we want to start loging in our user
 function requestLoginUser() {
   return {
-    type: LOGIN_USER_REQUEST
+    type: types.LOGIN_USER_REQUEST
   };
 }
 
 // When our user is logged in a response is returned
 function receiveLoginUser(data) {
   return {
-    type: LOGIN_USER_SUCCESS,
+    type: types.LOGIN_USER_SUCCESS,
     payload: data
   };
 }
@@ -403,7 +429,10 @@ export function loginUser(values, callback) {
           sessionStorage.setItem("access_token", data.access_token);
           callback();
         },
-        error => toastError(error)
+        error => {
+          let message = getErrorMessage(error);
+          toastError(message);
+        }
       )
       .then(data => dispatch(receiveLoginUser(data)));
   };
@@ -412,14 +441,14 @@ export function loginUser(values, callback) {
 // when we want to start loging out our user
 function requestLogoutUser() {
   return {
-    type: LOGOUT_USER_REQUEST
+    type: types.LOGOUT_USER_REQUEST
   };
 }
 
 // When our user is logged out a response is returned
 function receiveLogoutUser(data) {
   return {
-    type: LOGOUT_USER_SUCCESS,
+    type: types.LOGOUT_USER_SUCCESS,
     payload: data
   };
 }
@@ -440,7 +469,10 @@ export function logoutUser() {
           sessionStorage.removeItem("access_token");
           window.location = "/";
         },
-        error => toastError(error)
+        error => {
+          let message = getErrorMessage(error);
+          toastError(message);
+        }
       )
       .then(data => dispatch(receiveLogoutUser(data)));
   };
@@ -449,14 +481,14 @@ export function logoutUser() {
 // when we want to start changing our password
 function requestChangePassword() {
   return {
-    type: CHANGE_PASSWORD_REQUEST
+    type: types.CHANGE_PASSWORD_REQUEST
   };
 }
 
 // When our password is changed and  a response is returned
 function receiveChangePassword(data) {
   return {
-    type: CHANGE_PASSWORD_SUCCESS,
+    type: types.CHANGE_PASSWORD_SUCCESS,
     payload: data
   };
 }
@@ -471,8 +503,14 @@ export function changePassword(values, callback) {
     dispatch(requestChangePassword());
 
     return request.then(
-      data => dispatch(logoutUser()),
-      error => toastError(error)
+      data => {
+        toastSuccess("Password changed successfully. Please log in again");
+        dispatch(logoutUser());
+      },
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
     );
   };
 }
