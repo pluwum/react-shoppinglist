@@ -18,13 +18,14 @@ class EditShoppingListItem extends Component {
   }
 
   render() {
-    const { shoppingListItems, match: { params: { id } } } = this.props;
+    const { shoppingListItems, match: { params: { listId, id } } } = this.props;
     return (
       <div>
         <ShoppingListItemForm
           initialValues={shoppingListItems.data[id]}
           onSubmit={this.onSubmit.bind(this)}
           title="Edit Shopping list Item"
+          listId={listId}
         />
       </div>
     );

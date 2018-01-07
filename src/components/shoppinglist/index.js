@@ -5,6 +5,7 @@ import { deleteList, fetchLists } from "../../actions/index";
 import { Link } from "react-router-dom";
 import Spinner from "../misc/spinner";
 import Pagination from "../misc/pagination";
+import SearchBar from "../search/search_bar";
 
 class ShoppingLists extends Component {
   componentDidMount() {
@@ -19,28 +20,45 @@ class ShoppingLists extends Component {
   }
 
   renderShoppingLists() {
+    // Check if there data is not passed or if data is empty (helpful for search)
+    const { shoppingLists: { data, meta } } = this.props;
+    if (!data || !_.size(data)) {
+      return (
+        <tr>
+          <td colSpan="5">
+            <div className="alert alert-success">
+              <strong>Opps! </strong> You have no Shopping Lists matching this
+              query at the moment :-(. To create one, click{" "}
+              <Link to="/shoppinglists/new">here</Link>
+            </div>
+          </td>
+        </tr>
+      );
+    }
     return _.map(this.props.shoppingLists.data, shoppinglist => {
       return (
         <tr key={shoppinglist.id}>
-          <td />
-          <td>{shoppinglist.name}</td>
+          <td>{shoppinglist.id}</td>
+          <td> {shoppinglist.name}</td>
+          <td>{shoppinglist.date_created}</td>
           <td>{shoppinglist.description}</td>
-          <td>
-            <div className="pull-right">
+
+          <td className="text-center">
+            <div className="btn-group">
               <Link
                 to={`/shoppinglists/${shoppinglist.id}/items`}
-                className="btn btn-sm btn-primary"
+                className="btn  btn-primary btn-sm btn-space"
               >
                 View
               </Link>
               <Link
                 to={`/shoppinglists/${shoppinglist.id}/edit`}
-                className="btn btn-sm btn-info"
+                className="btn  btn-success btn-sm btn-space"
               >
                 Edit
               </Link>
               <button
-                className="btn btn-sm btn-danger"
+                className="btn  btn-danger btn-sm"
                 onClick={() => this.handleDelete(shoppinglist.id)}
               >
                 Delete
@@ -50,6 +68,14 @@ class ShoppingLists extends Component {
         </tr>
       );
     });
+  }
+
+  renderPagination() {
+    const { shoppingLists: { data, meta } } = this.props;
+
+    if (data || _.size(data)) {
+      return <Pagination meta={meta} onClick={this.props.fetchLists} />;
+    }
   }
 
   render() {
@@ -71,38 +97,67 @@ class ShoppingLists extends Component {
       return <Spinner />;
     }
 
-    // Check if there data is not passed or if data is empty (helpful for search)
-    if (!data || !_.size(data)) {
-      return (
-        <div className="alert alert-success">
-          <strong>Opps! </strong> You have no Shopping Lists matching this query
-          at the moment :-(. To create one, click{" "}
-          <Link to="/shoppinglists/new">here</Link>
-        </div>
-      );
-    }
-
     return (
       <div>
-        <div className="page-header">
-          <h1> Here's Your Shopping lists </h1>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <table className="table table-striped">
-              <tbody>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
-                </tr>
-                {this.renderShoppingLists()}
-              </tbody>
-            </table>
-            <Pagination meta={meta} onClick={this.props.fetchLists} />
+        <section className="content-header">
+          <h1>
+            My Shopping lists
+            <small>a listing of all your shopping lists</small>
+          </h1>
+          <ol className="breadcrumb">
+            <li>
+              <Link to="/shoppinglists">
+                <i className="fa fa-dashboard" /> Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/shoppinglists">Shopping</Link>
+            </li>
+            <li className="active">Lists</li>
+          </ol>
+        </section>
+
+        <section className="content">
+          <div className="row">
+            <div className="col-xs-12">
+              <div className="box">
+                <div className="box-header">
+                  <div className="box-title">
+                    <div className="input-group input-group-sm box-header-btn">
+                      <div className="input-group-btn">
+                        <Link
+                          to="/shoppinglists/new"
+                          className="btn btn-info form-control pull-right"
+                        >
+                          Add New List
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="box-tools">
+                    <SearchBar />
+                  </div>
+                </div>
+                <div className="box-body table-responsive no-padding">
+                  <table className="table table-hover">
+                    <tbody>
+                      <tr>
+                        <th>ID</th>
+                        <th>List Title</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                        <th className="text-center">Actions</th>
+                      </tr>
+                      {this.renderShoppingLists()}
+                    </tbody>
+                  </table>
+                </div>
+                {this.renderPagination()}
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   }

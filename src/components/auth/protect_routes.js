@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import NavBarAuthed from "../nav/authed";
-
+import Footer from "../nav/footer";
 export class ProtectedRoute extends Component {
   isLoggedIn() {
     const access_token = sessionStorage.getItem("access_token");
@@ -20,11 +20,12 @@ export class ProtectedRoute extends Component {
         render={props => {
           if (this.isLoggedIn()) {
             return (
-              <div>
+              <div className="wrapper">
                 <NavBarAuthed />
-                <div className="container">
+                <div className="content-wrapper">
                   <Component {...props} />
                 </div>
+                <Footer />
               </div>
             );
           }

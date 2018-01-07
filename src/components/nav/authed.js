@@ -12,79 +12,82 @@ class NavBarAuthed extends Component {
     });
   }
 
+  componentWillUnmount() {
+    document.body.classList.remove("skin-blue", "sidebar-collapse");
+  }
+  componentDidMount() {
+    document.body.classList.add("skin-blue", "sidebar-collapse");
+  }
+
   render() {
     return (
-      <div>
-        <nav className="navbar navbar-inverse navbar-fixed-top">
-          <div className="container">
-            <div className="navbar-header">
-              <button
-                type="button"
-                className="navbar-toggle collapsed"
-                data-toggle="collapse"
-                data-target="#navbar"
-                aria-expanded="false"
-                aria-controls="navbar"
-              >
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-              </button>
-              <Link className="navbar-brand" to="/shoppinglists">
-                Shopping List App
-              </Link>
-            </div>
+      <header className="main-header">
+        <Link to="/shoppinglists" className="logo">
+          <span className="logo-mini">
+            <b>L</b>IST
+          </span>
 
-            <SearchBar />
+          <span className="logo-lg">
+            <b>Shopping</b>LIST
+          </span>
+        </Link>
 
-            <div id="navbar" className="navbar-collapse collapse">
-              <ul className="nav navbar-nav">
-                <li className="active">
-                  <Link to="/shoppinglists">View Lists</Link>
-                </li>
-                <li>
-                  <Link to="/shoppinglists/new">New List</Link>
-                </li>
-              </ul>
-              <ul className="nav navbar-nav navbar-right">
-                <li>
-                  <Link to="#" onClick={() => this.handleLogout(event)}>
-                    Logout
-                  </Link>
-                </li>
-                <li className="dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle"
-                    data-toggle="dropdown"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Profile
-                    <span className="caret" />
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link to="/shoppinglists/password/change">
+        <nav className="navbar navbar-static-top">
+          <div className="navbar-custom-menu">
+            <ul className="nav navbar-nav">
+              <li className="dropdown user user-menu">
+                <Link to="#" className="dropdown-toggle" data-toggle="dropdown">
+                  <img
+                    src="/img/avatar5.png"
+                    className="user-image"
+                    alt="User Image"
+                  />
+                  <span className="hidden-xs">Patrick Luwum</span>
+                </Link>
+                <ul className="dropdown-menu">
+                  <li className="user-header">
+                    <img
+                      src="/img/avatar5.png"
+                      className="img-circle"
+                      alt="User Image"
+                    />
+
+                    <p>
+                      Patrick Luwum - Software Developer
+                      <small>Member since Nov. 2012</small>
+                    </p>
+                  </li>
+                  <li className="user-footer">
+                    <div className="pull-left">
+                      <Link
+                        to="/shoppinglists/password/change"
+                        className="btn btn-default btn-flat"
+                      >
                         Change Password
                       </Link>
-                    </li>
-                    <li role="separator" className="divider" />
-                    <li>
-                      <Link to="#" onClick={() => this.handleLogout(event)}>
-                        Logout
+                    </div>
+                    <div className="pull-right">
+                      <Link
+                        to="#"
+                        className="btn btn-default btn-flat"
+                        onClick={() => this.handleLogout(event)}
+                      >
+                        Sign out
                       </Link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <Link to="#" data-toggle="control-sidebar">
+                  <i className="fa fa-gears" />
+                </Link>
+              </li>
+            </ul>
           </div>
         </nav>
-        <div className="jumbotron" />
-      </div>
+      </header>
     );
   }
 }

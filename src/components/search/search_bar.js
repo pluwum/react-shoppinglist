@@ -32,17 +32,23 @@ export class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit} className="navbar-form navbar-nav">
-        <div className="form-group">
+      <form onSubmit={this.handleFormSubmit}>
+        <div className="input-group input-group-sm box-header-search">
           <input
             onChange={this.handleInputChange}
             value={this.state.term}
-            className="form-control"
+            type="text"
+            name="table_search"
+            className="form-control pull-right"
+            placeholder="Search"
           />
+
+          <div className="input-group-btn">
+            <button type="submit" className="btn btn-default">
+              <i className="fa fa-search" />
+            </button>
+          </div>
         </div>
-        <button type="submit" className="btn btn-success">
-          Search
-        </button>
       </form>
     );
   }

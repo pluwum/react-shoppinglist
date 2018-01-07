@@ -3,8 +3,16 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/index";
 import NavBarUnAuthed from "../nav/guest";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
+  componentWillUnmount() {
+    document.body.classList.remove("login-page");
+  }
+  componentDidMount() {
+    document.body.classList.add("login-page");
+  }
+
   onSubmit(values) {
     console.log("Form has been submited:", values);
     this.props.loginUser(values, () => {
@@ -17,11 +25,19 @@ class Login extends Component {
     // Destructure field and meta for cleaner code
     const { meta: { touched, error } } = field;
     // Check if validation errors exist and set class
-    const className = `form-group ${touched && error ? "has-danger" : ""}`;
+    const className = `form-group has-feedback ${
+      touched && error ? "has-danger" : ""
+    }`;
     return (
       <div className={className}>
         <label>{field.label}</label>
-        <input className="form-control" type={field.type} {...field.input} />
+        <input
+          className="form-control"
+          type={field.type}
+          {...field.input}
+          placeholder={field.label}
+        />
+        <span className={`glyphicon ${field.icon} form-control-feedback`} />
         <div className="text-help">{touched ? error : ""}</div>
       </div>
     );
@@ -30,31 +46,46 @@ class Login extends Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div>
-        <NavBarUnAuthed />
-        <div className="row">
-          <div className="col-md-4 col-md-offset-4 well well-lg">
-            <div id="login">
-              <h1>Please Login!</h1>
-              <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <Field
-                  name="email"
-                  label="Email"
-                  type="text"
-                  component={this.renderField}
-                />
-                <Field
-                  name="password"
-                  label="Password"
-                  type="password"
-                  component={this.renderField}
-                />
-                <button type="submit" className="btn btn-primary">
-                  Login{" "}
+      <div className="login-box">
+        <div className="login-logo">
+          <Link to="">
+            <b>Shopping</b>LIST
+          </Link>
+        </div>
+        <div className="login-box-body">
+          <p className="login-box-msg">Sign in to start</p>
+
+          <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+            <Field
+              name="email"
+              label="Email"
+              type="text"
+              component={this.renderField}
+              icon="glyphicon-envelope"
+            />
+            <Field
+              name="password"
+              label="Password"
+              type="password"
+              icon="glyphicon-lock"
+              component={this.renderField}
+            />
+
+            <div className="row">
+              <div className="col-xs-12">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-block btn-flat"
+                >
+                  Sign In
                 </button>
-              </form>
+              </div>
             </div>
-          </div>
+          </form>
+
+          <Link to="/shoppinglists/auth/register" className="text-center">
+            Register For an Account
+          </Link>
         </div>
       </div>
     );

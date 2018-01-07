@@ -18,40 +18,69 @@ class ShoppingListItemForm extends Component {
   }
 
   render() {
-    const { handleSubmit, onSubmit, title } = this.props;
+    const { handleSubmit, onSubmit, title, listId } = this.props;
+
     if (!title) {
       return <div>Form Was Not Configured Properly. Please Add title</div>;
     }
 
     return (
-      <div className="row">
-        <div className="col-md-5 col-md-offset-4 well well-lg">
-          <div id="login">
-            <h1>{title}</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Field
-                name="name"
-                label="Name"
-                type="text"
-                component={this.renderField}
-              />
-              <Field
-                name="description"
-                label="Description"
-                type="text"
-                component={this.renderField}
-              />
-              <div className="form-group">
-                <button type="submit" className="btn btn-primary">
-                  Submit
-                </button>
-                <Link to="/shoppinglists" className="btn btn-danger pull-right">
-                  Cancel
-                </Link>
+      <div>
+        <section className="content-header">
+          <h1>
+            {title}
+            <small>Items</small>
+          </h1>
+          <ol className="breadcrumb">
+            <li>
+              <Link to="/shoppinglists">
+                <i className="fa fa-dashboard" /> Shoppinglist
+              </Link>
+            </li>
+            <li>
+              <Link to={`/shoppinglists/${listId}/items`}>Items</Link>
+            </li>
+            <li className="active">Form</li>
+          </ol>
+        </section>
+        <section className="content">
+          <div className="row">
+            <div className="col-xs-12">
+              <div className="box box-primary">
+                <div className="box-header with-border">
+                  <h3 className="box-title">Fill in the following fields</h3>
+                </div>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="box-body">
+                    <Field
+                      name="name"
+                      label="Name"
+                      type="text"
+                      component={this.renderField}
+                    />
+                    <Field
+                      name="description"
+                      label="Description"
+                      type="text"
+                      component={this.renderField}
+                    />
+                  </div>
+                  <div className="box-footer">
+                    <button type="submit" className="btn btn-primary">
+                      Submit
+                    </button>
+                    <Link
+                      to={`/shoppinglists/${listId}/items`}
+                      className="btn btn-danger pull-right"
+                    >
+                      Cancel
+                    </Link>
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   }

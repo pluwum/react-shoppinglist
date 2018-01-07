@@ -54,8 +54,10 @@ class Pagination extends Component {
 
   render() {
     return (
-      <div>
-        <ul className="pagination">{this.renderLi()}</ul>
+      <div className="box-footer clearfix">
+        <ul className="pagination pagination-sm no-margin pull-right">
+          {this.renderLi()}
+        </ul>
       </div>
     );
   }

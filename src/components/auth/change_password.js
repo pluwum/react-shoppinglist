@@ -30,36 +30,65 @@ class ChangePassword extends Component {
     const { handleSubmit } = this.props;
     return (
       <div>
-        <div className="row">
-          <div className="col-md-5 col-md-offset-4 well well-lg">
-            <div id="login">
-              <h1>Change Password</h1>
-              <form
-                className="form-horizontal"
-                onSubmit={handleSubmit(this.onSubmit.bind(this))}
-              >
-                <Field
-                  name="password"
-                  label="New Password"
-                  type="password"
-                  component={this.renderField}
-                />
-                <Field
-                  name="repassword"
-                  label="Confirm New Password"
-                  type="password"
-                  component={this.renderField}
-                />
-                <button type="submit" className="btn btn-primary">
-                  Change{" "}
-                </button>
-                <Link to="/" className="btn btn-danger">
-                  Cancel
-                </Link>
-              </form>
+        <section className="content-header">
+          <h1>
+            Change account Password
+            <small>user</small>
+          </h1>
+          <ol className="breadcrumb">
+            <li>
+              <Link to="#">
+                <i className="fa fa-dashboard" /> Home
+              </Link>
+            </li>
+            <li>
+              <Link to="#">Profile</Link>
+            </li>
+            <li className="active">Change Password</li>
+          </ol>
+        </section>
+        <section className="content">
+          <div className="row">
+            <div className="col-xs-12">
+              <div className="box box-primary">
+                <div className="box-header with-border">
+                  <h3 className="box-title">Fill in the following fields</h3>
+                </div>
+                <form
+                  role="form"
+                  onSubmit={handleSubmit(this.onSubmit.bind(this))}
+                >
+                  <div className="box-body">
+                    <Field
+                      name="password"
+                      label="New Password"
+                      type="password"
+                      component={this.renderField}
+                    />
+                    <Field
+                      name="repassword"
+                      label="Confirm New Password"
+                      type="password"
+                      component={this.renderField}
+                    />
+                  </div>
+
+                  <div className="box-footer">
+                    <button type="submit" className="btn btn-primary">
+                      Change{" "}
+                    </button>
+                    <Link
+                      to="/shoppinglists"
+                      className="btn btn-danger pull-right"
+                    >
+                      Cancel
+                    </Link>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     );
   }

@@ -13,11 +13,14 @@ class AddShoppingListItem extends Component {
   }
 
   render() {
+    const { listId } = this.props.match.params;
+
     return (
       <div>
         <ShoppingListItemForm
           onSubmit={this.onSubmit.bind(this)}
           title="Create Shopping list Item"
+          listId={listId}
         />
       </div>
     );

@@ -8,7 +8,7 @@ function paginationParams(page, limit) {
   var pagination = "";
   // Check if we have pagination params
   if (typeof page !== "undefined" && typeof limit !== "undefined") {
-    pagination = `?limit=${limit}&page=${page}`;
+    pagination = `limit=${limit}&page=${page}`;
   }
   return pagination;
 }
@@ -44,7 +44,7 @@ function receiveLists(data) {
 export function fetchLists(page = 1, limit = 4) {
   var pagination = paginationParams(page, limit);
 
-  const url = `${ROOT_URL}/shoppinglists/${pagination}`;
+  const url = `${ROOT_URL}/shoppinglists/?${pagination}`;
   const request = axios.get(url, AXIOS_CONFIG());
 
   return function(dispatch) {
@@ -62,10 +62,10 @@ export function fetchLists(page = 1, limit = 4) {
 }
 
 // Lets search all shopping lists here
-export function searchLists(term, callback) {
+export function searchLists(term, page = 1, limit = 4) {
   var pagination = paginationParams(page, limit);
 
-  const url = `${ROOT_URL}/shoppinglists/search/?q=${term}${pagination}`;
+  const url = `${ROOT_URL}/shoppinglists/search/?q=${term}&${pagination}`;
 
   const request = axios.get(url, AXIOS_CONFIG());
 
@@ -340,10 +340,10 @@ function receiveListItems(data) {
 }
 
 // Lets get the items under shopping list with id
-export function fetchListItems(id, page = 1, limit = 1) {
+export function fetchListItems(id, page = 1, limit = 4) {
   var pagination = paginationParams(page, limit);
 
-  const url = `${ROOT_URL}/shoppinglists/${id}/items${pagination}`;
+  const url = `${ROOT_URL}/shoppinglists/${id}/items?${pagination}`;
   const request = axios.get(url, AXIOS_CONFIG());
   return function(dispatch) {
     // Update app state to let the app know the request is starting
