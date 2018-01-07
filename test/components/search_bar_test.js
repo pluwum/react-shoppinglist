@@ -1,11 +1,11 @@
 import { renderComponent, expect } from "../test_helper";
-import ShoppingLists from "../../src/components/shoppinglists";
+import SearchBar from "../../src/components/search/search_bar";
 
-describe("Test ShoppingLists Component", () => {
+describe("Test Search Bar Component", () => {
   let component;
 
   beforeEach(() => {
-    component = renderComponent(ShoppingLists);
+    component = renderComponent(SearchBar);
   });
 
   it("renders something", () => {
