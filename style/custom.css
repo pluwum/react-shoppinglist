@@ -1,0 +1,33 @@
+.center-block {
+  float: none !important;
+  display: block;
+  margin: 0 auto;
+}
+
+.btn-space {
+  margin-right: 0.5rem;
+}
+.box-header {
+  padding: 5px;
+}
+
+.box-header-btn {
+  width: 210px;
+}
+
+.box-header-search {
+  width: 150px;
+}
+
+.login-page,
+.register-page {
+  background-image: url("/img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background: #d2d6de; */
+}
+
+.login-logo a,
+.register-logo a {
+  color: #337ab7;
+}
