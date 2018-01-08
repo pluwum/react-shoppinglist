@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/index";
-import NavBarUnAuthed from "../nav/guest";
 import { Link } from "react-router-dom";
 
 class Login extends Component {

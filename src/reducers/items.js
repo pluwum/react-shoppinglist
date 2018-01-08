@@ -1,7 +1,6 @@
 import _ from "lodash";
 import {
   FETCH_LIST_ITEMS_SUCCESS,
-  DELETE_LIST_ITEM_SUCCESS,
   FETCH_LIST_ITEMS_REQUEST
 } from "../actions/types";
 
@@ -20,9 +19,6 @@ export function ShoppingListItemsReducer(state = {}, action) {
         data: _.mapKeys(action.payload.data, "id"),
         meta: action.payload.meta
       };
-
-    case DELETE_LIST_ITEM_SUCCESS:
-      return _.omit(state, action.payload);
     default:
       return state;
   }

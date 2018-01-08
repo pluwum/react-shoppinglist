@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 class Footer extends Component {
   render() {
@@ -8,11 +7,8 @@ class Footer extends Component {
         <div className="pull-right hidden-xs">
           <b>Version</b> 1.0.0
         </div>
-        <strong>
-          Copyright &copy; 2018
-          <Link to="#">Patrick Luwum</Link>.
-        </strong>{" "}
-        All rights reserved.
+        <strong>Copyright &copy; 2018 Patrick Luwum.</strong> All rights
+        reserved.
       </footer>
     );
   }
