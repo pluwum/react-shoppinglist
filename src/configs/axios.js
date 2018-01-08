@@ -1,4 +1,4 @@
-export const ROOT_URL = "http://localhost:5000/v1";
+export const ROOT_URL = "https://python-shoppinglist-api.herokuapp.com/v1";
 export const AXIOS_CONFIG = function() {
   const ACCESS_TOKEN = sessionStorage.getItem("access_token");
   return {
