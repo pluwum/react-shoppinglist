@@ -1,16 +1,13 @@
 {
   "name": "redux-simple-starter",
   "version": "1.0.0",
-  "description":
-    "Simple starter package for Redux with React and Babel support",
+  "description": "Simple starter package for Redux with React and Babel support",
   "main": "index.js",
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test":
-      "mocha --compilers js:babel-core/register --require jsdom-global --require mock-local-storage --require ignore-styles ./test/test_helper.js --recursive ./test",
-    "coverage":
-      "nyc mocha --compilers js:babel-core/register --require jsdom-global --require mock-local-storage --require ignore-styles ./test/test_helper.js --recursive ./test ",
+    "test": "mocha --compilers js:babel-core/register --require jsdom-global --require mock-local-storage --require ignore-styles ./test/test_helper.js --recursive ./test",
+    "coverage": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "test:watch": "npm run test -- --watch"
   },
   "author": "",
@@ -24,6 +21,7 @@
     "babel-preset-react": "^6.1.18",
     "babel-register": "^6.26.0",
     "chai": "^3.5.0",
+    "chai-jest-snapshot": "^2.0.0",
     "chai-jquery": "^2.0.0",
     "css-loader": "^0.28.7",
     "eslint": "^4.13.1",
@@ -37,9 +35,12 @@
     "jsdom-global": "^3.0.2",
     "mocha": "^2.5.3",
     "mock-local-storage": "^1.0.5",
+    "moxios": "^0.4.0",
     "nyc": "^11.4.1",
     "prettier-eslint": "^8.6.0",
     "react-addons-test-utils": "^0.14.7",
+    "react-test-renderer": "^16.2.0",
+    "redux-mock-store": "^1.4.0",
     "style-loader": "^0.19.1",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
