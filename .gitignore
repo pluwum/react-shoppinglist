@@ -9,3 +9,4 @@ npm-debug.log
 # myfiles
 package-lock.json
 .vscode/
+.nyc_output/
