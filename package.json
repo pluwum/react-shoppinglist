@@ -9,8 +9,7 @@
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test":
       "mocha --compilers js:babel-core/register --require jsdom-global --require mock-local-storage --require ignore-styles ./test/test_helper.js --recursive ./test",
-    "coverage":
-      "nyc mocha --compilers js:babel-core/register --require jsdom-global --require mock-local-storage --require ignore-styles ./test/test_helper.js --recursive ./test ",
+    "coverage": "nyc npm test",
     "test:watch": "npm run test -- --watch"
   },
   "author": "",
