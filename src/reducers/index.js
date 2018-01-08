@@ -1,15 +1,10 @@
+import { AuthReducer } from "./auth";
 import { combineReducers } from "redux";
-import {
-  SearchResultReducer,
-  ShoppingListsReducer,
-  ShoppingListItemsReducer,
-  AuthReducer
-} from "./reducer_shoppinglist";
-
 import { reducer as FormReducer } from "redux-form";
+import { ShoppingListItemsReducer } from "./items";
+import { ShoppingListsReducer } from "./shoppinglists";
 
 const rootReducer = combineReducers({
-  searchResults: SearchResultReducer,
   shoppingLists: ShoppingListsReducer,
   shoppingListItems: ShoppingListItemsReducer,
   form: FormReducer,

@@ -5,21 +5,22 @@ import { createStore, applyMiddleware } from "redux";
 import ReduxPromise from "redux-promise";
 import reducers from "./reducers";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ShoppingLists from "./components/shoppinglists";
-import CreateShoppingList from "./components/create_shoppinglist";
-import EditShoppingList from "./components/edit_shoppinglist";
-import ShoppingListItems from "./components/shoppinglist_items";
-import AddShoppingListItem from "./components/add_shoppinglist_item";
-import EditShoppingListItem from "./components/edit_shoppinglist_item";
-import ChangePassword from "./components/change_password";
-import CreateAccount from "./components/create_account";
-import Login from "./components/login";
+import ShoppingLists from "./components/shoppinglist";
+import CreateShoppingList from "./components/shoppinglist/create";
+import EditShoppingList from "./components/shoppinglist/edit";
+import ShoppingListItems from "./components/item";
+import AddShoppingListItem from "./components/item/create";
+import EditShoppingListItem from "./components/item/edit";
+import ChangePassword from "./components/auth/change_password";
+import CreateAccount from "./components/auth/create_account";
+import Login from "./components/auth/login";
 import logger from "redux-logger";
-import ProtectedRoute from "./containers/protect_routes";
+import ProtectedRoute from "./components/auth/protect_routes";
 import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
 
 const createStoreWithMiddleware = composeWithDevTools(
-  applyMiddleware(ReduxPromise, logger)
+  applyMiddleware(ReduxPromise, logger, thunk)
 )(createStore);
 
 ReactDOM.render(
