@@ -55,7 +55,7 @@ export function fetchLists(page = 1, limit = 4) {
       ({ data }) => dispatch(receiveLists(data)),
       error => {
         let message = getErrorMessage(error);
-        toastError(message);
+        //toastError(message);
       }
     );
   };
@@ -409,8 +409,8 @@ function requestLoginUser() {
 // When our user is logged in a response is returned
 function receiveLoginUser(data) {
   return {
-    type: types.LOGIN_USER_SUCCESS,
-    payload: data
+    type: types.LOGIN_USER_SUCCESS
+    //payload: data
   };
 }
 
@@ -448,8 +448,8 @@ function requestLogoutUser() {
 // When our user is logged out a response is returned
 function receiveLogoutUser(data) {
   return {
-    type: types.LOGOUT_USER_SUCCESS,
-    payload: data
+    type: types.LOGOUT_USER_SUCCESS
+    //payload: data
   };
 }
 
