@@ -17,12 +17,6 @@ class ShoppingListItems extends Component {
     this.props.fetchListItems(id);
   }
 
-  // Create a function to pass to pagination component
-  fetchListItems(page, limit) {
-    const { id } = this.props.match.params;
-    this.props.fetchListItems(id, page, limit);
-  }
-
   renderListItems() {
     const {
       shoppingListItems: { data, meta },
@@ -80,11 +74,17 @@ class ShoppingListItems extends Component {
   }
 
   renderPagination() {
-    const { shoppingListItems: { data, meta } } = this.props;
+    const {
+      shoppingListItems: { data, meta },
+      match: { params: { id } }
+    } = this.props;
 
     if (data || _.size(data)) {
       return (
-        <Pagination meta={meta} onClick={this.fetchListItems.bind(this)} />
+        <Pagination
+          meta={meta}
+          onClick={this.props.fetchListItems.bind(this, id)}
+        />
       );
     }
   }
