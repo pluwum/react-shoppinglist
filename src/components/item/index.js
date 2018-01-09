@@ -79,7 +79,7 @@ class ShoppingListItems extends Component {
       match: { params: { id } }
     } = this.props;
 
-    if (data || _.size(data)) {
+    if (data && _.size(data)) {
       return (
         <Pagination
           meta={meta}

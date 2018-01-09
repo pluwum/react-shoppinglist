@@ -73,7 +73,7 @@ class ShoppingLists extends Component {
   renderPagination() {
     const { shoppingLists: { data, meta } } = this.props;
 
-    if (data || _.size(data)) {
+    if (data && _.size(data)) {
       return <Pagination meta={meta} onClick={this.props.fetchLists} />;
     }
   }
