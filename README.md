@@ -18,7 +18,7 @@ This project is part of a submission for week two of Andela BootCamp UG CH3 2017
 
 ### Prerequisites
 
-    1. [npm](https://docs.npmjs.com/getting-started/installing-node)]
+    1. [npm](https://docs.npmjs.com/getting-started/installing-node)
     2. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
     3. [Shoppinglist API](https://github.com/pluwum/shopping-list-api)
 
@@ -31,6 +31,8 @@ This project is part of a submission for week two of Andela BootCamp UG CH3 2017
         - npm install
         - npm start
     3. You can now Open your browser and navigate to the server address indicated in `npm start` command above.
+
+A working version of the application can be accessed from [here](https://shoppinglist-react-app.herokuapp.com/)
 
 # Tests
 
