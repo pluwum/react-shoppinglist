@@ -1,5 +1,4 @@
 [![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/pluwum/react-shoppinglist)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/ef48c431d64d97e7dc5b/test_coverage)](https://codeclimate.com/github/pluwum/react-shoppinglist/test_coverage)
 [![Build Status](https://travis-ci.org/pluwum/react-shoppinglist.svg?branch=ch-implement-recommendations-154082903)](https://travis-ci.org/pluwum/react-shoppinglist)
 [![Coverage Status](https://coveralls.io/repos/github/pluwum/react-shoppinglist/badge.svg?branch=master)](https://coveralls.io/github/pluwum/react-shoppinglist?branch=master)
 
