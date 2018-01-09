@@ -1,29 +1,22 @@
-import axios from "axios";
 import { toastError, toastSuccess } from "../helpers/notifications";
-import { ROOT_URL, AXIOS_CONFIG } from "../configs/axios";
+import { getErrorMessage } from "../helpers/misc.js";
+import {
+  apiFetchLists,
+  apiSearchLists,
+  apiSearchListItems,
+  apiCreateList,
+  apiCreateUser,
+  apiEditList,
+  apiDeleteList,
+  apiEditListItem,
+  apiAddToList,
+  apiFetchListItems,
+  apiDeleteListItem,
+  apiLoginUser,
+  apiLogoutUser,
+  apiChangePassword
+} from "../api";
 import * as types from "./types";
-
-// Prepare pagination parameters
-function paginationParams(page, limit) {
-  var pagination = "";
-  // Check if we have pagination params
-  if (typeof page !== "undefined" && typeof limit !== "undefined") {
-    pagination = `limit=${limit}&page=${page}`;
-  }
-  return pagination;
-}
-
-// separate network errors from API errors
-function getErrorMessage(error) {
-  let message = "An undefined error occured";
-
-  if (typeof error.response != "undefined") {
-    message = error.response.data.message;
-  } else {
-    message = error.message;
-  }
-  return message;
-}
 
 // when we want to start fetching our lists
 function requestLists() {
@@ -42,10 +35,7 @@ function receiveLists(data) {
 
 // Lets get all shopping lists here
 export function fetchLists(page = 1, limit = 4) {
-  var pagination = paginationParams(page, limit);
-
-  const url = `${ROOT_URL}/shoppinglists/?${pagination}`;
-  const request = axios.get(url, AXIOS_CONFIG());
+  const request = apiFetchLists(page, limit);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -63,11 +53,7 @@ export function fetchLists(page = 1, limit = 4) {
 
 // Lets search all shopping lists here
 export function searchLists(term, page = 1, limit = 4) {
-  var pagination = paginationParams(page, limit);
-
-  const url = `${ROOT_URL}/shoppinglists/search/?q=${term}&${pagination}`;
-
-  const request = axios.get(url, AXIOS_CONFIG());
+  const request = apiSearchLists(term, page, limit);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -85,11 +71,7 @@ export function searchLists(term, page = 1, limit = 4) {
 
 // Lets search all shopping list items
 export function searchListItems(id, term, page = 1, limit = 4) {
-  var pagination = paginationParams(page, limit);
-
-  const url = `${ROOT_URL}/shoppinglists/search/${id}/?q=${term}&${pagination}`;
-
-  const request = axios.get(url, AXIOS_CONFIG());
+  const request = apiSearchListItems(id, term, page, limit);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -130,8 +112,7 @@ function failCreateList(error) {
 
 // Lets create shopping list here
 export function createList(values, callback) {
-  const url = `${ROOT_URL}/shoppinglists/`;
-  const request = axios.post(url, values, AXIOS_CONFIG());
+  const request = apiCreateList(values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -169,8 +150,7 @@ function receiveCreateUser(data) {
 
 // Lets create user here
 export function createUser(values, callback) {
-  const url = `${ROOT_URL}/auth/register`;
-  const request = axios.post(url, values, AXIOS_CONFIG());
+  const request = apiCreateUser(values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -208,8 +188,7 @@ function receiveEditList(data) {
 
 // Lets update shopping list here
 export function editList(id, values, callback) {
-  const url = `${ROOT_URL}/shoppinglists/${id}`;
-  const request = axios.put(url, values, AXIOS_CONFIG());
+  const request = apiEditList(id, values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -247,8 +226,7 @@ function receiveDeleteList(data) {
 
 // Lets delete the shopping list with id
 export function deleteList(id, callback) {
-  const url = `${ROOT_URL}/shoppinglists/${id}`;
-  const request = axios.delete(url, AXIOS_CONFIG());
+  const request = apiDeleteList(id);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -285,8 +263,7 @@ function receiveEditListItem(data) {
 
 // Lets update shopping Item list here
 export function editListItem(listId, id, values, callback) {
-  const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
-  const request = axios.put(url, values, AXIOS_CONFIG());
+  const request = apiEditListItem(listId, id, values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -324,8 +301,7 @@ function receiveAddToList(data) {
 
 // Lets add item to list here
 export function addToList(listid, values, callback) {
-  const url = `${ROOT_URL}/shoppinglists/${listid}/items`;
-  const request = axios.post(url, values, AXIOS_CONFIG());
+  const request = apiAddToList(listid, values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -363,10 +339,8 @@ function receiveListItems(data) {
 
 // Lets get the items under shopping list with id
 export function fetchListItems(id, page = 1, limit = 4) {
-  var pagination = paginationParams(page, limit);
+  const request = apiFetchListItems(id, page, limit);
 
-  const url = `${ROOT_URL}/shoppinglists/${id}/items?${pagination}`;
-  const request = axios.get(url, AXIOS_CONFIG());
   return function(dispatch) {
     // Update app state to let the app know the request is starting
     dispatch(requestListItems());
@@ -400,8 +374,7 @@ function receiveDeleteListItem(data) {
 
 // Lets delete the shopping list item with id
 export function deleteListItem(listId, id, callback) {
-  const url = `${ROOT_URL}/shoppinglists/${listId}/items/${id}`;
-  const request = axios.delete(url, AXIOS_CONFIG());
+  const request = apiDeleteListItem(listId, id);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -438,8 +411,7 @@ function receiveLoginUser(data) {
 
 // Lets login user here
 export function loginUser(values, callback) {
-  const url = `${ROOT_URL}/auth/login`;
-  const request = axios.post(url, values, AXIOS_CONFIG());
+  const request = apiLoginUser(values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -477,9 +449,7 @@ function receiveLogoutUser(data) {
 
 // Log out user
 export function logoutUser() {
-  const url = `${ROOT_URL}/auth/logout`;
-
-  const request = axios.post(url, null, AXIOS_CONFIG());
+  const request = apiLogoutUser();
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting
@@ -517,8 +487,7 @@ function receiveChangePassword(data) {
 
 // Lets change user password
 export function changePassword(values, callback) {
-  const url = `${ROOT_URL}/auth/change-password`;
-  const request = axios.post(url, values, AXIOS_CONFIG());
+  const request = apiChangePassword(values);
 
   return function(dispatch) {
     // Update app state to let the app know the request is starting

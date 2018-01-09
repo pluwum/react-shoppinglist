@@ -17,12 +17,14 @@ class ShoppingListItems extends Component {
     this.props.fetchListItems(id);
   }
 
+  // Go through each item returned and render it into a table row
   renderListItems() {
     const {
       shoppingListItems: { data, meta },
       match: { params: { id } }
     } = this.props;
 
+    // Check if we really have data
     if (!data || !_.size(data)) {
       return (
         <tr>
@@ -65,6 +67,7 @@ class ShoppingListItems extends Component {
     });
   }
 
+  // Handle Delete button click event
   handleItemDelete(itemId) {
     const listId = this.props.match.params.id;
     console.log("You are trying to delete:", itemId);
@@ -73,6 +76,7 @@ class ShoppingListItems extends Component {
     });
   }
 
+  // Check if there is data to paginate then return pagination component
   renderPagination() {
     const {
       shoppingListItems: { data, meta },
@@ -95,6 +99,7 @@ class ShoppingListItems extends Component {
       match: { params: { id } }
     } = this.props;
 
+    // Show spinner and loading text if global sate is fetching
     if (isFetching) {
       return <Spinner />;
     }
