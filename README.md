@@ -38,6 +38,10 @@ A working version of the application can be accessed from [here](https://shoppin
 
 # Tests
 
+After succesfully setting up the application, run the following to test.
+
+`npm run test`
+
 # Contributors
 
 This project was made posible by [myself](https://github.com/pluwum) and the wonderful ladies and gentlemen of CH3 and CH21.
