@@ -55,7 +55,7 @@ export function fetchLists(page = 1, limit = 4) {
       ({ data }) => dispatch(receiveLists(data)),
       error => {
         let message = getErrorMessage(error);
-        //toastError(message);
+        toastError(message);
       }
     );
   };
