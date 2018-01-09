@@ -83,6 +83,28 @@ export function searchLists(term, page = 1, limit = 4) {
   };
 }
 
+// Lets search all shopping list items
+export function searchListItems(id, term, page = 1, limit = 4) {
+  var pagination = paginationParams(page, limit);
+
+  const url = `${ROOT_URL}/shoppinglists/search/${id}/?q=${term}&${pagination}`;
+
+  const request = axios.get(url, AXIOS_CONFIG());
+
+  return function(dispatch) {
+    // Update app state to let the app know the request is starting
+    dispatch(requestListItems());
+
+    return request.then(
+      ({ data }) => dispatch(receiveListItems(data)),
+      error => {
+        let message = getErrorMessage(error);
+        toastError(message);
+      }
+    );
+  };
+}
+
 // when we want to start creating our list
 function requestCreateList() {
   return {

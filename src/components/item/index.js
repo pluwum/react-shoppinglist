@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchListItems, deleteListItem } from "../../actions/index";
+import {
+  fetchListItems,
+  deleteListItem,
+  searchListItems
+} from "../../actions/index";
 import { Link } from "react-router-dom";
 import Spinner from "../misc/spinner";
 import Pagination from "../misc/pagination";
 import { toastError, toastSuccess } from "../../helpers/notifications";
+import SearchBar from "../search/search_bar";
 
 class ShoppingListItems extends Component {
   componentDidMount() {
@@ -132,7 +137,11 @@ class ShoppingListItems extends Component {
                     </div>
                   </div>
 
-                  <div className="box-tools" />
+                  <div className="box-tools">
+                    <SearchBar
+                      onSubmit={this.props.searchListItems.bind(this, id)}
+                    />
+                  </div>
                 </div>
                 <div className="box-body table-responsive no-padding">
                   <table className="table table-hover">
@@ -164,5 +173,6 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps, {
   fetchListItems,
-  deleteListItem
+  deleteListItem,
+  searchListItems
 })(ShoppingListItems);

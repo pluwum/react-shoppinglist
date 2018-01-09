@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { deleteList, fetchLists } from "../../actions/index";
+import { deleteList, fetchLists, searchLists } from "../../actions/index";
 import { Link } from "react-router-dom";
 import Spinner from "../misc/spinner";
 import Pagination from "../misc/pagination";
@@ -136,7 +136,7 @@ class ShoppingLists extends Component {
                   </div>
 
                   <div className="box-tools">
-                    <SearchBar />
+                    <SearchBar onSubmit={this.props.searchLists.bind(this)} />
                   </div>
                 </div>
                 <div className="box-body table-responsive no-padding">
@@ -170,6 +170,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { deleteList, fetchLists })(
-  ShoppingLists
-);
+export default connect(mapStateToProps, {
+  deleteList,
+  fetchLists,
+  searchLists
+})(ShoppingLists);

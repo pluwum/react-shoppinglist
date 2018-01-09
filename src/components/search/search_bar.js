@@ -18,7 +18,8 @@ export class SearchBar extends Component {
     event.preventDefault();
 
     // Go to api and get results
-    this.props.searchLists(this.state.term);
+    //this.props.searchLists(this.state.term);
+    this.props.onSubmit(this.state.term);
 
     // Clear search field when user clicks search
     //this.setState({ term: '' });
